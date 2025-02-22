@@ -1,9 +1,9 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export default function StreamingLayout({
   children,
 }: Readonly<{
   children: ReactNode;
 }>) {
-  return <>{children}</>;
+  return <div>{children}</div>;
 }
