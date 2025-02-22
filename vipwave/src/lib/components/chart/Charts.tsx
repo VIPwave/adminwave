@@ -30,31 +30,13 @@ const columns: ColumnDef<Song>[] = [
   },
 ];
 
-const TABLE_DATA: Song[] = [
-  {
-    rank: 1,
-    rank_type: "new",
-    rank_variance: 0,
-    album_image: "https://via.placeholder.com/150",
-    title: "DRAMA",
-    singer: "G-DRAGON",
-  },
-  {
-    rank: 2,
-    rank_type: "new",
-    rank_variance: 0,
-    album_image: "https://via.placeholder.com/150",
-    title: "DRAMA",
-    singer: "G-DRAGON",
-  },
-];
-
-export default function Chart() {
+export default function Chart(props: { items: Song[] }) {
+  const { items } = props;
   const table = useReactTable({
-    data: TABLE_DATA,
+    data: items,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
-  return <TaskTable table={table} songList={TABLE_DATA} columns={columns} />;
+  return <TaskTable table={table} songList={items} columns={columns} />;
 }
