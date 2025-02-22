@@ -13,7 +13,7 @@ type ChartType =
   | "bugs_top100"
   | "vibe_top100";
 
-export function convertRedableChartType(type: ChartType) {
+export function convertRedableChartType(type: ChartType | string) {
   if (type === "flo_top100") {
     return "플로 TOP100";
   } else if (type === "melon_hot100") {
