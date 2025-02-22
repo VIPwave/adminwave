@@ -32,17 +32,20 @@ export default function TaskTable(props: ChartTableProps) {
   const { table, columns } = props;
 
   return (
-    <div className="w-full bg-zinc-900">
+    <div className="w-full bg-chart px-6">
       <div>
         <Table>
-          <TableHeader className="border-t-2 border-t-black p-8">
+          <TableHeader className="p-6">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="font-bold">
+              <TableRow
+                key={headerGroup.id}
+                className="font-bold border-gray-500"
+              >
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
                       key={header.id}
-                      className="item-center align-middle p-2"
+                      className="item-center align-middle p-4"
                     >
                       {header.isPlaceholder
                         ? null
@@ -59,15 +62,15 @@ export default function TaskTable(props: ChartTableProps) {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} className="h-18">
+                <TableRow key={row.id} className="h-18 border-gray-700">
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
                       className={
                         cell.column.getIndex() !== 1 &&
                         cell.column.getIndex() !== 5
-                          ? "justify-center text-center"
-                          : ""
+                          ? "justify-center text-center py-6"
+                          : "py-6"
                       }
                     >
                       {flexRender(
@@ -84,7 +87,7 @@ export default function TaskTable(props: ChartTableProps) {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  현재 순위에 없습니다.
+                  초 비상 ‼️ 현재 순위에 없습니다 :(
                 </TableCell>
               </TableRow>
             )}
