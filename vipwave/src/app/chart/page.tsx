@@ -1,4 +1,4 @@
-import Charts from "../../../lib/components/chart/Charts";
+import Charts from "@/lib/components/chart/Charts";
 
 export default function ChartPage() {
   return (
