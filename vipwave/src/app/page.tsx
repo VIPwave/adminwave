@@ -1,7 +1,7 @@
 import Image from "next/image";
 import bigbangImg from "../../public/b_3.jpeg";
-import TodoList from "../../lib/components/todoList/TodoList";
-import NoticeList from "../../lib/components/notice/Notice";
+import TodoList from "@/lib/components/todoList/TodoList";
+import NoticeList from "@/lib/components/notice/Notice";
 
 export default function Home() {
   return (
