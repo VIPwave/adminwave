@@ -15,10 +15,6 @@ const navItems = [
     href: "/chart",
   },
   {
-    name: "가이드",
-    href: "/guide",
-  },
-  {
     name: "원클릭스밍",
     href: "/streaming",
   },
@@ -35,7 +31,6 @@ export default function Header() {
         (item) => item.href === `/${currentPath}`
       );
       setActiveTab(nextTab);
-      console.log(activeTab);
     }
   }, [activeTab, path]);
 
