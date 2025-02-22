@@ -5,40 +5,46 @@ import dayjs from "dayjs";
 import { MongoClient } from "mongodb";
 
 type ChartAgreegation = {
-  agreegation: Array<ChartItem>
-}
+  agreegation: Array<ChartItem>;
+};
 
 type ChartItem = {
-  platform: string,
-  type: string,
-  items: Array<Song>
-}
+  platform: string;
+  type: string;
+  items: Array<Song>;
+  timestamp: string;
+};
 
 export default async function ChartPage() {
   // TODO: 유틸성 method 분리 및 정리
-  const client = new MongoClient("mongodb+srv://service_readonly_db_user:8sGfklmdfABM72Cd@cluster0.lruc9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+  const client = new MongoClient(
+    "mongodb+srv://service_readonly_db_user:8sGfklmdfABM72Cd@cluster0.lruc9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+  );
   await client.connect();
   const db = client.db("music_charts");
-  const collection = db.collection('charts');
+  const collection = db.collection("charts");
   // NOTE: mongoDB의 Data이기 때문에, 임의로 캐스팅함.
-  const result: ChartAgreegation = await collection.findOne({ timestamp: dayjs().subtract(10, 'm').format("YYYY.MM.DD HH:00") }) as unknown as ChartAgreegation
+  const result: ChartAgreegation = (await collection.findOne({
+    timestamp: dayjs().subtract(10, "m").format("YYYY.MM.DD HH:00"),
+  })) as unknown as ChartAgreegation;
 
-  
   return (
     <>
-      <div className="p-4 bg-zinc-900 overflow-hidden">
-        공지사항입니다.
-      </div>      
-        {result.agreegation.map((e, index) => (
-              <>
-                <div key={index} className="p-4">
-                  {convertRedableChartType(e.type)}
-                  <Charts key={index} items={e.items} />
-                </div>
-              </>
-            )
-          )
-        }
+      <div className="p-4 py-6 mb-4 flex justify-center items-center bg-chart overflow-hidden">
+        전체반복 ON 📣 랜덤재생 OFF 📣 중복곡 허용 📣 캐싱적용 OFF 📣 6시, 11시
+        리셋
+      </div>
+      {result.agreegation.map((e, index) => (
+        <div key={index}>
+          <div className="mx-8 mt-4 mb-2">
+            {convertRedableChartType(e.type)}
+            <span className="float-right text-xs text-gray-400 mt-2">
+              {e.timestamp}
+            </span>
+          </div>
+          <Charts items={e.items} />
+        </div>
+      ))}
     </>
   );
 }

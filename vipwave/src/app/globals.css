@@ -43,7 +43,9 @@
 .custom-pulse {
   animation: customPulse 6s ease-in-out infinite;
 }
-
+.bg-chart {
+  background-color: #252525;
+}
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
