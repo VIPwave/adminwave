@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="mt-8 sticky top-[100vh] w-full text-justify flex justify-between text-zinc-600 px-8 py-4 border-t border-solid border-t-gray-600">
+    <footer className="mt-8 sticky top-[100vh] w-full text-justify flex justify-between text-zinc-600 px-6 py-4 border-t border-solid border-t-gray-600 text-xs">
       <div>
         <p>VIPWAVE</p>
         <p>© 빅뱅음원총공팀</p>

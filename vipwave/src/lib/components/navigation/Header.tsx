@@ -25,17 +25,12 @@ export default function Header() {
   const path = usePathname();
 
   useEffect(() => {
-    const currentPath = path.split("/")[1];
-    if (currentPath) {
-      const nextTab = navItems.findIndex(
-        (item) => item.href === `/${currentPath}`
-      );
-      setActiveTab(nextTab);
-    }
-  }, [activeTab, path]);
+    const nextTab = navItems.findIndex((item) => item.href === path);
+    setActiveTab(nextTab);
+  }, [path]);
 
   return (
-    <header className="flex items-center justify-between px-8 border-b border-gray-800">
+    <header className="flex items-center justify-between px-6 border-b border-gray-800 text-sm">
       <Link
         className="font-bold"
         href="/"

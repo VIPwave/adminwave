@@ -50,6 +50,14 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+table > thead > tr:hover {
+  background-color: transparent !important;
+}
+
+table > tbody > tr:hover {
+  background-color: transparent !important;
+}
+
 @layer base {
   :root {
     --radius: 0.5rem;

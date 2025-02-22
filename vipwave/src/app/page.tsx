@@ -6,7 +6,7 @@ import NoticeList from "@/lib/components/notice/Notice";
 export default function Home() {
   return (
     <>
-      <div className="relative h-[200px] md:h-[300px]">
+      <div className="relative h-[200px] md:h-[300px] ">
         <Image
           src={bigbangImg}
           alt="BIGBANG concert stage"
@@ -15,7 +15,7 @@ export default function Home() {
         />
       </div>
 
-      <div className="p-4">
+      <div className="p-4 bg-gradient-to-t to-primary/20 from-transparent">
         <TodoList title="TODOLIST" />
         <NoticeList title="음원총공팀에서 알립니다" />
       </div>

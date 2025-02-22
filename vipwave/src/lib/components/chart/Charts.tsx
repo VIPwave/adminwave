@@ -18,6 +18,7 @@ const columns: ColumnDef<Song>[] = [
       const url = String(row.getValue());
       return <Image src={url} alt="album_image" width={56} height={56} />;
     },
+    size: 30,
   },
   {
     accessorKey: "title",
@@ -33,6 +34,7 @@ const columns: ColumnDef<Song>[] = [
         </div>
       );
     },
+    size: 150,
   },
   {
     accessorKey: "rank_variance",
@@ -59,11 +61,13 @@ const columns: ColumnDef<Song>[] = [
         </div>
       );
     },
+    size: 8,
   },
   {
     accessorKey: "rank",
     header: () => <div className="text-center">순위</div>,
     enableSorting: false,
+    size: 8,
   },
 ];
 
