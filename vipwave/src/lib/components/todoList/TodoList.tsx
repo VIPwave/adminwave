@@ -1,14 +1,23 @@
 import { Button } from "@/components/ui/button";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 import { ChevronRight } from "lucide-react";
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.locale("ko");
+
 export default function TodoList(props: { title: string }) {
-  const date = "2025년 02월 25일";
+  const now = dayjs().tz("Asia/Seoul");
+
+  const today = now.format("YYYY년 MM월 DD일");
 
   return (
     <>
       <div className="flex py-2 border-b border-gray-600 px-2">
         <span className="font-bold grow">{props.title}</span>
-        <span className="text-gray-500 text-xs flex items-center">{date}</span>
+        <span className="text-gray-500 text-xs flex items-center">{today}</span>
       </div>
 
       <div>
