@@ -10,6 +10,7 @@ import TaskTable, { Song } from "./ChartTable";
 const columns: ColumnDef<Song>[] = [
   {
     id: "album_image",
+    accessorKey: "album_image",
     header: "",
     enableSorting: false,
   },
@@ -24,8 +25,13 @@ const columns: ColumnDef<Song>[] = [
     enableSorting: false,
   },
   {
+    accessorKey: "rank_variance",
+    header: "",
+    enableSorting: false,
+  },
+  {
     accessorKey: "rank",
-    header: "순위",
+    header: () => <div className="text-center">순위</div>,
     enableSorting: false,
   },
 ];
@@ -35,7 +41,7 @@ const TABLE_DATA: Song[] = [
     rank: 1,
     rank_type: "new",
     rank_variance: 0,
-    album_image: "https://via.placeholder.com/150",
+    album_image: "../../public/b_3.jpeg",
     title: "DRAMA",
     singer: "G-DRAGON",
   },
@@ -43,7 +49,7 @@ const TABLE_DATA: Song[] = [
     rank: 2,
     rank_type: "new",
     rank_variance: 0,
-    album_image: "https://via.placeholder.com/150",
+    album_image: "test",
     title: "DRAMA",
     singer: "G-DRAGON",
   },
