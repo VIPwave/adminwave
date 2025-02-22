@@ -32,7 +32,7 @@ export default function TaskTable(props: ChartTableProps) {
   const { table, columns } = props;
 
   return (
-    <div className="w-full bg-chart px-6">
+    <div className="w-full bg-chart px-4">
       <div>
         <Table>
           <TableHeader className="p-6">
@@ -45,7 +45,8 @@ export default function TaskTable(props: ChartTableProps) {
                   return (
                     <TableHead
                       key={header.id}
-                      className="item-center align-middle p-4"
+                      className="item-center align-middle hover:bg-none"
+                      style={{ width: header.column.columnDef.size }}
                     >
                       {header.isPlaceholder
                         ? null
@@ -69,9 +70,10 @@ export default function TaskTable(props: ChartTableProps) {
                       className={
                         cell.column.getIndex() !== 1 &&
                         cell.column.getIndex() !== 5
-                          ? "justify-center text-center py-6"
-                          : "py-6"
+                          ? "justify-center text-center py-6 px-0"
+                          : "py-6 px-2"
                       }
+                      style={{ width: cell.column.columnDef.size }}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

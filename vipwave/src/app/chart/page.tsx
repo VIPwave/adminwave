@@ -31,14 +31,13 @@ export default async function ChartPage() {
   return (
     <>
       <div className="p-4 py-6 mb-4 flex justify-center items-center bg-chart overflow-hidden">
-        전체반복 ON 📣 랜덤재생 OFF 📣 중복곡 허용 📣 캐싱적용 OFF 📣 6시, 11시
-        리셋
+        전체반복 ON / 랜덤재생 OFF / 중복곡 허용 / 캐싱적용 OFF
       </div>
       {result.agreegation.map((e, index) => (
         <div key={index}>
-          <div className="mx-8 mt-4 mb-2">
+          <div className="mx-6 mt-4 mb-2">
             {convertRedableChartType(e.type)}
-            <span className="float-right text-xs text-gray-400 mt-2">
+            <span className="float-right text-xs text-gray-500">
               {e.timestamp}
             </span>
           </div>

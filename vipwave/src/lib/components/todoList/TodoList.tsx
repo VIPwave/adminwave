@@ -6,9 +6,9 @@ export default function TodoList(props: { title: string }) {
 
   return (
     <>
-      <div className="flex py-2 border-b border-gray-800 px-4">
+      <div className="flex py-2 border-b border-gray-600 px-2">
         <span className="font-bold grow">{props.title}</span>
-        <span className="text-gray-400 text-xs flex items-center">{date}</span>
+        <span className="text-gray-500 text-xs flex items-center">{date}</span>
       </div>
 
       <div>
