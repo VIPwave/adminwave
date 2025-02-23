@@ -1,9 +1,11 @@
 "use client";
+
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -22,6 +24,11 @@ export default function NoticeList(props: { title: string }) {
       </div>
 
       <div>
+        <Notice title="빅뱅음원총공팀 서포트" url="/support" isExtra={false} />
+        <Notice
+          title="케이타운포유 코엑스 광고"
+          url="https://www.instagram.com/p/DGaL4nQBgno/?igsh=MXRvc2Y4cXR6cHNmaQ=="
+        />
         <Notice
           title="헬퍼 모집 안내"
           url="https://x.com/bbvip00819/status/1891780223622054214?s=46"
@@ -35,11 +42,17 @@ export default function NoticeList(props: { title: string }) {
   );
 }
 
-function Notice(props: { title: string; url: string }) {
-  const { title, url } = props;
+function Notice(props: { title: string; url: string; isExtra?: boolean }) {
+  const { title, url, isExtra } = props;
+
+  const router = useRouter();
 
   const handleClick = () => {
-    window.open(url, "_blank", "noopener,noreferrer");
+    if (isExtra) {
+      window.open(url, "_blank", "noopener,noreferrer");
+    } else {
+      router.push(url);
+    }
   };
 
   return (
