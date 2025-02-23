@@ -1,5 +1,5 @@
 import Image from "next/image";
-import bigbangImg from "../../public/b_3.jpeg";
+import bigbangImg from "../../public/3bang_3.jpeg";
 import TodoList from "@/lib/components/todoList/TodoList";
 import NoticeList from "@/lib/components/notice/Notice";
 
