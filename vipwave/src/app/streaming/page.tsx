@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import Modal from '@/lib/components/modal/modal';
-import { getDeviceType } from '@/lib/detectDevice';
-import { streamingLinks } from '@/lib/streamingLinks';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import Modal from "@/lib/components/modal/modal";
+import { getDeviceType } from "@/lib/detectDevice";
+import { streamingLinks } from "@/lib/streamingLinks";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface streamingLink {
   name: string;
@@ -23,7 +23,7 @@ export default function StreamingPage() {
     links: string[];
   } | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deviceType, setDeviceType] = useState<string>('');
+  const [deviceType, setDeviceType] = useState<string>("");
 
   useEffect(() => {
     setDeviceType(getDeviceType());
@@ -32,15 +32,15 @@ export default function StreamingPage() {
   const openModal = (site: streamingLink) => {
     let links: string[] = [];
 
-    if (deviceType === 'Android') {
+    if (deviceType === "Android") {
       links = site.androidLinks || [];
-    } else if (deviceType === 'iOS') {
+    } else if (deviceType === "iOS") {
       links = site.iphoneLinks || [];
-    } else if (deviceType === 'iPad') {
+    } else if (deviceType === "iPad") {
       links = site.ipadLinks || [];
-    } else if (deviceType === 'Windows') {
+    } else if (deviceType === "Windows") {
       links = site.windowLinks || [];
-    } else if (deviceType === 'Mac') {
+    } else if (deviceType === "Mac") {
       links = site.macLinks || [];
     }
 
@@ -49,16 +49,17 @@ export default function StreamingPage() {
   };
 
   const handleButtonClick = (link: string) => {
-    window.open(link, '_blank');
+    window.open(link, "_blank");
   };
 
   return (
-    <div>
-      <div className="grid grid-cols-3 gap-y-4 px-5 py-10 justify-center items-center">
+    <div className="px-5 ">
+      <p className="font-bold my-6 text-sm">원클릭 링크</p>
+      <div className="flex justify-start flex-wrap w-full gap-[3.2vw]">
         {streamingLinks.map((site) => (
           <div
             key={site.name}
-            className="flex px-4 items-center gap-4 bg-[#ffffffaa] text-black text-[16px] w-40 rounded-[6px] h-[50px]"
+            className="flex px-4 items-center gap-4 bg-chart text-white text-[16px] w-[calc(50%-1.6vw)] h-[60px]"
             onClick={() => openModal(site)}
           >
             <Image
@@ -73,9 +74,14 @@ export default function StreamingPage() {
           </div>
         ))}
       </div>
+      <p className="font-bold mt-8 text-sm">스트리밍 가이드</p>
+      <p className="my-4 text-sm break-keep">
+        원클릭 링크가 정상 작동 되지 않는 분들은 총공팀에 문의 후 아래 가이드에
+        맞게 플레이리스트를 생성해주세요.
+      </p>
       <div className="flex flex-col justify-center items-center">
         <Image
-          src={'/streamingList.jpeg'}
+          src={"/streamingList.jpeg"}
           alt="streamingList"
           width={550}
           height={1182}
