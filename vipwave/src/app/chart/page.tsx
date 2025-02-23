@@ -1,32 +1,18 @@
 import Charts from "@/lib/components/chart/Charts";
-import { Song } from "@/lib/components/chart/ChartTable";
+import { loadPosts } from "@/lib/load-charts";
 import { convertRedableChartType } from "@/lib/utils";
-import dayjs from "dayjs";
-import { MongoClient } from "mongodb";
 
-type ChartAgreegation = {
-  agreegation: Array<ChartItem>;
-};
-
-type ChartItem = {
-  platform: string;
-  type: string;
-  items: Array<Song>;
-  timestamp: string;
-};
+async function fetchData() {
+  try {
+    const result = await loadPosts();
+    return result;
+  } catch (e) {
+    console.log("err= ", e);
+  }
+}
 
 export default async function ChartPage() {
-  // TODO: 유틸성 method 분리 및 정리
-  const client = new MongoClient(
-    "mongodb+srv://service_readonly_db_user:8sGfklmdfABM72Cd@cluster0.lruc9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  );
-  await client.connect();
-  const db = client.db("music_charts");
-  const collection = db.collection("charts");
-  // NOTE: mongoDB의 Data이기 때문에, 임의로 캐스팅함.
-  const result: ChartAgreegation = (await collection.findOne({
-    timestamp: dayjs().subtract(10, "m").format("YYYY.MM.DD HH:00"),
-  })) as unknown as ChartAgreegation;
+  const result = await fetchData();
 
   return (
     <>
@@ -50,6 +36,20 @@ export default async function ChartPage() {
             <Charts items={e.items} />
           </div>
         ))}
+      {result &&
+        result.agreegation.map((e, index) => (
+          <div key={index}>
+            <div className="mx-6 mt-4 mb-2">
+              {convertRedableChartType(e.type)}
+              <span className="float-right text-xs text-gray-500">
+                {e.timestamp}
+              </span>
+            </div>
+            <Charts items={e.items} />
+          </div>
+        ))}
     </>
   );
 }
+
+export const dynamic = "force-dynamic";
