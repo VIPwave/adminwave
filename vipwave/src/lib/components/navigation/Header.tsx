@@ -18,6 +18,10 @@ const navItems = [
     name: "원클릭스트리밍",
     href: "/streaming",
   },
+  {
+    name: "서포트",
+    href: "/support",
+  },
 ];
 
 export default function Header() {

@@ -18,7 +18,7 @@ const columns: ColumnDef<Song>[] = [
       const url = String(row.getValue());
       return <Image src={url} alt="album_image" width={56} height={56} />;
     },
-    size: 30,
+    size: 35,
   },
   {
     accessorKey: "title",

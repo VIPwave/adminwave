@@ -27,7 +27,7 @@ export default async function ChartPage() {
       {result &&
         result.agreegation.map((e, index) => (
           <div key={index}>
-            <div className="mx-6 mt-4 mb-2">
+            <div className="mx-5 mt-4 mb-2">
               {convertRedableChartType(e.type)}
               <span className="float-right text-xs text-gray-500">
                 {e.timestamp}
