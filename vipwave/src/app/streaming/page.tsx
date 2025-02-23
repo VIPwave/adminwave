@@ -53,9 +53,9 @@ export default function StreamingPage() {
   };
 
   return (
-    <div className="px-5 ">
+    <div className="px-5">
       <p className="font-bold my-6 text-sm">원클릭 링크</p>
-      <div className="flex justify-start flex-wrap w-full gap-[3.2vw]">
+      <div className="flex justify-start flex-wrap w-full onclick-link-gap">
         {streamingLinks.map((site) => (
           <div
             key={site.name}
@@ -92,7 +92,7 @@ export default function StreamingPage() {
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {selectedSite && (
           <div className="flex flex-col gap-[20px]">
-            <div className="flex items-center gap-4 text-[16px] text-black">
+            <div className="flex items-center gap-4 text-[16px]">
               <Image
                 src={selectedSite.logo}
                 alt={`${selectedSite.name} logo`}
@@ -105,29 +105,34 @@ export default function StreamingPage() {
             </div>
 
             {selectedSite.links.length > 1 && (
-              <div className="text-black text-[14px] px-2">
+              <div className="text-sm text-center">
                 {selectedSite.links.length}개의 링크를 순서대로 모두
                 클릭해주세요
               </div>
             )}
 
-            <div className="grid grid-cols-2 gap-2">
-              {selectedSite.links.length > 0 ? (
-                selectedSite.links.map((link, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleButtonClick(link)}
-                    className="text-black text-center border-solid border-[1.5px] border-[#6c6c6c] p-3 rounded-[16px] cursor-pointer hover:bg-gray-200 transition"
-                  >
-                    {selectedSite.name} {index + 1}
-                  </button>
-                ))
-              ) : (
-                <div className="text-center text-black">
-                  해당 기기에서 사용할 수 있는 링크가 없습니다.
+            {selectedSite.links.length > 0 ? (
+              <>
+                <div className="grid grid-cols-2 gap-2">
+                  {selectedSite.links.map((link, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleButtonClick(link)}
+                      className=" text-center border-solid border-[1.5px] border-white p-3  cursor-pointer hover:bg-gray-200 transition"
+                    >
+                      {selectedSite.name} {index + 1}
+                    </button>
+                  ))}
                 </div>
-              )}
-            </div>
+                <p className="text-zinc-400 text-xs text-center">
+                  전체반복 ON / 랜덤재생 OFF / 중복곡 허용 / 캐싱적용 OFF
+                </p>
+              </>
+            ) : (
+              <div className="text-center text-xs">
+                현재 기기에서 사용할 수 있는 링크가 없습니다
+              </div>
+            )}
           </div>
         )}
       </Modal>

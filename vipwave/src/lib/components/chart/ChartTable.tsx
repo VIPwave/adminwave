@@ -32,7 +32,7 @@ export default function TaskTable(props: ChartTableProps) {
   const { table, columns } = props;
 
   return (
-    <div className="w-full bg-chart px-4">
+    <div className="w-full bg-chart px-3">
       <div>
         <Table>
           <TableHeader className="p-6">

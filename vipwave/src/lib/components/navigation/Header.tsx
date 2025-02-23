@@ -15,7 +15,7 @@ const navItems = [
     href: "/chart",
   },
   {
-    name: "원클릭스밍",
+    name: "원클릭스트리밍",
     href: "/streaming",
   },
 ];
@@ -30,7 +30,7 @@ export default function Header() {
   }, [path]);
 
   return (
-    <header className="flex items-center justify-between px-6 border-b border-gray-800 text-sm">
+    <header className="flex items-center justify-between px-5 border-b border-gray-800 text-sm">
       <Link
         className="font-bold"
         href="/"
