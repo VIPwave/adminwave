@@ -41,7 +41,7 @@ const columns: ColumnDef<Song>[] = [
     header: "",
     enableSorting: false,
     cell: (current) => {
-      const rankVariance = current.row.original.rank_variance;
+      const rankVariance = Number(current.row.original.rank_variance);
       const rankType = current.row.original.rank_type;
 
       if (rankType === "new") {
@@ -51,8 +51,16 @@ const columns: ColumnDef<Song>[] = [
         return <div className="text-center">-</div>;
       }
 
-      const color = rankVariance > 0 ? "text-red-500" : "text-blue-500";
-      const icon = rankVariance > 0 ? "▲" : "▼";
+      let color = "text-red-500";
+      let icon = "▲";
+
+      if (rankType === "up") {
+        color = "text-red-500";
+        icon = "▲";
+      } else if (rankType === "down") {
+        color = "text-blue-500";
+        icon = "▼";
+      }
 
       return (
         <div className="text-center">
