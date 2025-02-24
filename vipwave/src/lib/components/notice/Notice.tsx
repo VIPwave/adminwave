@@ -27,7 +27,7 @@ export default function NoticeList(props: { title: string }) {
         <Notice title="빅뱅음원총공팀 서포트" url="/support" isExtra={false} />
         <Notice
           title="케이타운포유 코엑스 광고"
-          url="https://www.instagram.com/p/DGaL4nQBgno/?igsh=MXRvc2Y4cXR6cHNmaQ=="
+          url="https://www.instagram.com/p/DGaL4nQBgno/"
         />
         <Notice
           title="헬퍼 모집 안내"
@@ -35,7 +35,7 @@ export default function NoticeList(props: { title: string }) {
         />
         <Notice
           title="HOME SWEET HOME(feat. 태양, 대성) 멜론 일간 1위 76일 기록"
-          url="https://www.instagram.com/p/DF4KnxtBRgd/?igsh=MWU3YTFwOWZnZG52aA=="
+          url="https://www.instagram.com/p/DF4KnxtBRgd/"
         />
       </div>
     </>
