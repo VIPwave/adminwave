@@ -24,6 +24,7 @@ export default function StreamingPage() {
   } | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deviceType, setDeviceType] = useState<string>('');
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     setDeviceType(getDeviceType());
@@ -86,20 +87,28 @@ export default function StreamingPage() {
           </div>
         ))}
       </div>
-      <p className="font-bold mt-8 text-sm">스트리밍 가이드</p>
-      <p className="my-4 text-sm break-keep">
-        원클릭 링크가 정상 작동 되지 않는 분들은 총공팀에 문의 후 아래 가이드에
-        맞게 플레이리스트를 생성해주세요.
+      {/* <p className="font-bold mt-8 text-sm">스트리밍 가이드</p> */}
+      <p className="my-8 text-sm break-keep">
+        원클릭 링크가 정상 작동 되지 않는 분들은 총공팀에 문의부탁드립니다 :)
       </p>
       <div className="flex flex-col justify-center items-center">
-        <Image
-          src={'/streamingList.jpeg'}
-          alt="streamingList"
-          width={550}
-          height={1182}
-          priority
-          unoptimized
-        />
+        <div className="relative w-[550px]">
+          {!imageLoaded && (
+            <div className="absolute top-0 left-0 w-full bg-gray-300 animate-pulse rounded-lg"></div>
+          )}
+          <Image
+            src={'/streamingList.jpeg'}
+            alt="streamingList"
+            width={550}
+            height={1182}
+            priority
+            unoptimized
+            className={`rounded-lg transition-opacity duration-500 ${
+              imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+            onLoad={() => setImageLoaded(true)}
+          />
+        </div>
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {selectedSite && (
