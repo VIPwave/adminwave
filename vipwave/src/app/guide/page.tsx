@@ -25,9 +25,20 @@ const guideData: Guide[] = [
 
 export default function GuidePage() {
   const [currentGuide, setCurrentGuide] = useState<Guide>(guideData[0]); // 기본값: 멜론
+  const [imageLoaded, setImageLoaded] = useState<boolean[]>(
+    new Array(currentGuide.images.length).fill(false)
+  );
 
   const changeGuide = (guide: Guide) => {
     setCurrentGuide(guide);
+  };
+
+  const handleImageLoad = (index: number) => {
+    setImageLoaded((prev) => {
+      const updated = [...prev];
+      updated[index] = true;
+      return updated;
+    });
   };
 
   return (
@@ -50,16 +61,29 @@ export default function GuidePage() {
         ))}
       </div>
 
-      <div className="flex flex-wrap justify-center gap-4">
+      <div className="flex flex-col items-center justify-center w-full">
         {currentGuide.images.map((img, index) => (
-          <Image
+          <div
             key={index}
-            src={img}
-            alt={`${currentGuide.name} 가이드`}
-            width={400}
-            height={400}
-            className="border rounded-lg shadow-lg"
-          />
+            className="relative w-[400px] h-auto max-w-full border rounded-lg shadow-lg overflow-hidden mb-6"
+          >
+            {/* 스켈레톤 UI */}
+            {!imageLoaded[index] && (
+              <div className="absolute top-0 left-0 w-full h-full bg-gray-300 animate-pulse rounded-lg"></div>
+            )}
+
+            {/* 이미지 (로딩 완료 후 표시) */}
+            <Image
+              src={img}
+              alt={`${currentGuide.name} 가이드`}
+              width={400}
+              height={600} // 기본 비율 유지
+              className={`rounded-lg transition-opacity duration-500 object-cover ${
+                imageLoaded[index] ? 'opacity-100' : 'opacity-0'
+              }`}
+              onLoad={() => handleImageLoad(index)}
+            />
+          </div>
         ))}
       </div>
     </div>
