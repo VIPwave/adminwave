@@ -12,7 +12,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icon.ico" sizes="any" />
         <title>VIPWAVE</title>
         <meta name="description" content="빅뱅 음원총공팀" />
       </Head>
