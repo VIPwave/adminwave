@@ -1,26 +1,31 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const navItems = [
   {
-    name: "home",
-    href: "/",
+    name: 'home',
+    href: '/',
   },
   {
-    name: "차트",
-    href: "/chart",
+    name: '차트',
+    href: '/chart',
   },
   {
-    name: "원클릭스트리밍",
-    href: "/streaming",
+    name: '원클릭',
+    href: '/streaming',
+  },
+  ,
+  {
+    name: '가이드',
+    href: '/guide',
   },
   {
-    name: "서포트",
-    href: "/support",
+    name: '서포트',
+    href: '/support',
   },
 ];
 
@@ -29,7 +34,7 @@ export default function Header() {
   const path = usePathname();
 
   useEffect(() => {
-    const nextTab = navItems.findIndex((item) => item.href === path);
+    const nextTab = navItems.findIndex((item) => item && item.href === path);
     setActiveTab(nextTab);
   }, [path]);
 
@@ -46,15 +51,16 @@ export default function Header() {
       <nav className="flex gap-6">
         {navItems.map(
           (item, index) =>
-            item.name !== "home" && (
+            item &&
+            item.name !== 'home' && (
               <Link
                 href={item.href}
                 key={index}
                 className={cn(
-                  "py-4 px-1 border-b-2 -mb-px",
+                  'py-4 px-1 border-b-2 -mb-px',
                   index === activeTab
-                    ? "bold"
-                    : "border-transparent text-gray-500"
+                    ? 'bold'
+                    : 'border-transparent text-gray-500'
                 )}
                 onClick={() => setActiveTab(index)}
               >
