@@ -136,13 +136,13 @@ export default function StreamingPage() {
               <>
                 <div className="grid grid-cols-2 gap-2">
                   {selectedSite.links.map((link, index) => (
-                    <button
+                    <div
                       key={index}
                       onClick={() => handleButtonClick(link)}
-                      className=" text-center border-solid border-[1.5px] border-white p-3  cursor-pointer hover:bg-gray-200 transition"
+                      className=" text-center border-solid border-[1.5px] border-white p-3  cursor-pointer"
                     >
                       {selectedSite.name} {index + 1}
-                    </button>
+                    </div>
                   ))}
                 </div>
                 <p className="text-zinc-400 text-xs text-center">
