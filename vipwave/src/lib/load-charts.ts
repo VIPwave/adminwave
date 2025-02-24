@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import dayjs from "dayjs";
 import { Song } from "./components/chart/ChartTable";
 
 export type ChartAgreegation = {
@@ -25,9 +26,8 @@ async function getMongoClient() {
 }
 
 function getCurrentTimeKey(): string {
-    const now = new Date();
-    console.log("now = ", now);
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}`;
+    const now = dayjs().subtract(5, 'minute');
+    return now.format("YYYY-MM-DD-HH");
 }
 
 export async function loadPosts() {
