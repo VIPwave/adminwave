@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import Modal from "@/lib/components/modal/modal";
-import { getDeviceType } from "@/lib/detectDevice";
-import { streamingLinks } from "@/lib/streamingLinks";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import Modal from '@/lib/components/modal/modal';
+import { getDeviceType } from '@/lib/detectDevice';
+import { streamingLinks } from '@/lib/streamingLinks';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 interface streamingLink {
   name: string;
@@ -23,24 +23,36 @@ export default function StreamingPage() {
     links: string[];
   } | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deviceType, setDeviceType] = useState<string>("");
+  const [deviceType, setDeviceType] = useState<string>('');
 
   useEffect(() => {
     setDeviceType(getDeviceType());
   }, []);
 
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isModalOpen]);
+
   const openModal = (site: streamingLink) => {
     let links: string[] = [];
 
-    if (deviceType === "Android") {
+    if (deviceType === 'Android') {
       links = site.androidLinks || [];
-    } else if (deviceType === "iOS") {
+    } else if (deviceType === 'iOS') {
       links = site.iphoneLinks || [];
-    } else if (deviceType === "iPad") {
+    } else if (deviceType === 'iPad') {
       links = site.ipadLinks || [];
-    } else if (deviceType === "Windows") {
+    } else if (deviceType === 'Windows') {
       links = site.windowLinks || [];
-    } else if (deviceType === "Mac") {
+    } else if (deviceType === 'Mac') {
       links = site.macLinks || [];
     }
 
@@ -49,7 +61,7 @@ export default function StreamingPage() {
   };
 
   const handleButtonClick = (link: string) => {
-    window.open(link, "_blank");
+    window.open(link, '_blank');
   };
 
   return (
@@ -81,7 +93,7 @@ export default function StreamingPage() {
       </p>
       <div className="flex flex-col justify-center items-center">
         <Image
-          src={"/streamingList.jpeg"}
+          src={'/streamingList.jpeg'}
           alt="streamingList"
           width={550}
           height={1182}
