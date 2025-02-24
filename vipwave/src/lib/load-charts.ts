@@ -20,25 +20,30 @@ async function getMongoClient() {
         client = new MongoClient(
           "mongodb+srv://service_readonly_db_user:8sGfklmdfABM72Cd@vipwave.lruc9.mongodb.net/?retryWrites=true&w=majority&appName=vipwave"
         );
-        await client.connect();
     }
     return client;
 }
 
 function getCurrentTimeKey(): string {
     const now = new Date();
+    console.log("now = ", now);
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}`;
 }
 
 export async function loadPosts() {
     const currentTimeKey = getCurrentTimeKey();
+    console.log("currentTimeKey = ", currentTimeKey, cache);
 
     // Check if data is in cache
     if (cache[currentTimeKey]) {
+        console.log("HIT")
         return cache[currentTimeKey];
     }
 
+    console.log("MISS")
+
     const client = await getMongoClient();
+    await client.connect();
     const db = client.db("music_charts");
     const collection = db.collection("charts");
 
@@ -53,5 +58,7 @@ export async function loadPosts() {
     } catch (e) {
         console.log("e =", e);
         return { agreegation: [] };
+    } finally {
+        await client.close();
     }
 }

@@ -1,11 +1,10 @@
 import Charts from "@/lib/components/chart/Charts";
-import { loadPosts } from "@/lib/load-charts";
-import { convertRedableChartType } from "@/lib/utils";
+import {loadPosts} from "@/lib/load-charts";
+import {convertRedableChartType} from "@/lib/utils";
 
 async function fetchData() {
   try {
-    const result = await loadPosts();
-    return result;
+    return await loadPosts();
   } catch (e) {
     console.log("err= ", e);
   }
