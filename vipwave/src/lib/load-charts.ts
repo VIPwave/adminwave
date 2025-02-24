@@ -13,6 +13,7 @@ type ChartItem = {
 };
 
 let client: MongoClient | null = null;
+const cache: { [key: string]: ChartAgreegation } = {};
 
 async function getMongoClient() {
     if (!client) {
@@ -24,12 +25,31 @@ async function getMongoClient() {
     return client;
 }
 
+function getCurrentTimeKey(): string {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}`;
+}
+
 export async function loadPosts() {
+    const currentTimeKey = getCurrentTimeKey();
+
+    // Check if data is in cache
+    if (cache[currentTimeKey]) {
+        return cache[currentTimeKey];
+    }
+
     const client = await getMongoClient();
     const db = client.db("music_charts");
     const collection = db.collection("charts");
+
     try {
-        return (await collection.findOne({ id: "vip-wave" })) as unknown as ChartAgreegation || { agreegation: [] };
+        const data = (await collection.findOne({ id: "vip-wave" })) as unknown as ChartAgreegation || { agreegation: [] };
+
+        // Invalidate old cache and set new cache
+        Object.keys(cache).forEach(key => delete cache[key]);
+        cache[currentTimeKey] = data;
+
+        return data;
     } catch (e) {
         console.log("e =", e);
         return { agreegation: [] };
