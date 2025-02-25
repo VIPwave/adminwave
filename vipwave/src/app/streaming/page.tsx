@@ -95,7 +95,7 @@ export default function StreamingPage() {
       <div className="flex flex-col justify-center items-center">
         <div className="relative w-[550px]">
           {!imageLoaded && (
-            <div className="absolute top-0 left-0 w-full bg-gray-300 animate-pulse rounded-lg"></div>
+            <div className="absolute top-0 left-0 w-full bg-gray-300 animate-pulse"></div>
           )}
           <Image
             src={'/streamingList.jpeg'}
@@ -104,7 +104,7 @@ export default function StreamingPage() {
             height={1182}
             priority
             unoptimized
-            className={`rounded-lg transition-opacity duration-500 ${
+            className={`transition-opacity duration-500 ${
               imageLoaded ? 'opacity-100' : 'opacity-0'
             }`}
             onLoad={() => setImageLoaded(true)}
