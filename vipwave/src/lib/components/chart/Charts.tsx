@@ -45,7 +45,7 @@ const columns: ColumnDef<Song>[] = [
       const rankType = current.row.original.rank_type;
 
       if (rankType === "new") {
-        return <div className="text-center">NEW</div>;
+        return <div className="text-center font-bold">NEW</div>;
       }
       if (rankType === "static") {
         return <div className="text-center">-</div>;
