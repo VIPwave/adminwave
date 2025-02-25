@@ -5,5 +5,5 @@ export default function GuideLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  return <div>{children}</div>;
+  return <div className="p-6">{children}</div>;
 }
