@@ -93,7 +93,7 @@ export default function StreamingPage() {
         맞게 설정 후 재생목록을 생성해주세요.
       </p>
       <div className="flex flex-col justify-center items-center">
-        <div className="relative w-[550px]">
+        <div className="relative w-[550px] max-w-full">
           {!imageLoaded && (
             <div className="absolute top-0 left-0 w-full h-full bg-gray-300 animate-pulse"></div>
           )}
