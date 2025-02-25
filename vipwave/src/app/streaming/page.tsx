@@ -87,9 +87,10 @@ export default function StreamingPage() {
           </div>
         ))}
       </div>
-      {/* <p className="font-bold mt-8 text-sm">스트리밍 가이드</p> */}
-      <p className="my-8 text-sm break-keep">
-        원클릭 링크가 정상 작동 되지 않는 분들은 총공팀에 문의부탁드립니다 :)
+      <p className="font-bold mt-8 text-sm">스트리밍 리스트</p>
+      <p className="my-4 text-sm break-keep">
+        원클릭 링크가 정상 작동 되지 않는 분들은 총공팀에 문의 후 아래 가이드에
+        맞게 설정 후 재생목록을 생성해주세요.
       </p>
       <div className="flex flex-col justify-center items-center">
         <div className="relative w-[550px]">
