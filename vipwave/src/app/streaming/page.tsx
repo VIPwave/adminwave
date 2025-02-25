@@ -74,7 +74,7 @@ export default function StreamingPage() {
           </div>
         ))}
       </div>
-      <p className="font-bold mt-8 text-sm">스트리밍 가이드</p>
+      <p className="font-bold mt-8 text-sm">스트리밍 리스트</p>
       <p className="my-4 text-sm break-keep">
         원클릭 링크가 정상 작동 되지 않는 분들은 총공팀에 문의 후 아래 가이드에
         맞게 플레이리스트를 생성해주세요.
