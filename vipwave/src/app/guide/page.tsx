@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 interface Guide {
   name: string;
@@ -51,13 +51,36 @@ const FILTERS: Record<TAB, Guide[]> = {
 };
 
 export default function GuidePage() {
+  const tabBarRef = useRef<HTMLDivElement | null>(null);
   const [selectedTab, setSelectedTab] = useState<TAB>('스트리밍 가이드');
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
   const [currentGuide, setCurrentGuide] = useState<Guide>(
     FILTERS[selectedTab][0]
   );
   const [imageLoaded, setImageLoaded] = useState<boolean[]>(
     new Array(currentGuide.images.length).fill(false)
   );
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!tabBarRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - tabBarRef.current.offsetLeft);
+    setScrollLeft(tabBarRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !tabBarRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - tabBarRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5; // 이동 속도 조절
+    tabBarRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
 
   const changeTab = (tab: TAB) => {
     setSelectedTab(tab);
@@ -79,22 +102,31 @@ export default function GuidePage() {
   };
 
   return (
-    <div className="p-6 flex flex-col items-center gap-6">
+    <div className="relative min-w-full">
       {/* 탭 */}
-      <div className="flex gap-4 border-b">
-        {TABS.map((tab) => (
-          <div
-            key={tab}
-            onClick={() => changeTab(tab)}
-            className={`py-2 px-4 text-sm ${
-              selectedTab === tab
-                ? 'border-b-2 border-white font-bold'
-                : 'text-gray-400'
-            }`}
-          >
-            {tab}
-          </div>
-        ))}
+      <div
+        ref={tabBarRef}
+        className="overflow-x-auto [&::-webkit-scrollbar]:hidden mb-4"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseUp}
+        onMouseUp={handleMouseUp}
+      >
+        <div className="inline-flex gap-4 border-b whitespace-nowrap px-2 min-w-max">
+          {TABS.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => changeTab(tab)}
+              className={`py-2 px-4 text-sm ${
+                selectedTab === tab
+                  ? 'border-b-2 border-white font-bold'
+                  : 'text-gray-400'
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-2 mb-4">
