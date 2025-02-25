@@ -65,7 +65,7 @@ const columns: ColumnDef<Song>[] = [
       return (
         <div className="text-center">
           <span className={color}>{icon}</span>
-          <span>{Math.abs(rankVariance)}</span>
+          {Math.abs(rankVariance) != 0 && <span>{Math.abs(rankVariance)}</span>}
         </div>
       );
     },
