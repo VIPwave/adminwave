@@ -79,7 +79,7 @@ export default function GuidePage() {
   };
 
   return (
-    <div className="p-6 flex flex-col items-center gap-8">
+    <div className="p-6 flex flex-col items-center gap-6">
       {/* 탭 */}
       <div className="flex gap-4 border-b">
         {TABS.map((tab) => (
@@ -98,19 +98,20 @@ export default function GuidePage() {
       </div>
 
       <div className="flex flex-wrap gap-2 mb-4">
-        {FILTERS[selectedTab].map((guide, index) => (
-          <button
-            key={index}
-            onClick={() => changeGuide(guide)}
-            className={`px-4 py-2 ${
-              guide.name === currentGuide.name
-                ? 'bg-white text-black'
-                : 'bg-chart text-white'
-            }`}
-          >
-            {guide.name}
-          </button>
-        ))}
+        {FILTERS[selectedTab].length > 1 &&
+          FILTERS[selectedTab].map((guide, index) => (
+            <button
+              key={index}
+              onClick={() => changeGuide(guide)}
+              className={`px-4 py-2 ${
+                guide.name === currentGuide.name
+                  ? 'bg-white text-black'
+                  : 'bg-chart text-white'
+              }`}
+            >
+              {guide.name}
+            </button>
+          ))}
       </div>
 
       <div className="flex flex-col items-center justify-center w-full">
