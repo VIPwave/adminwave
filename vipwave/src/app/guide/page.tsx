@@ -11,12 +11,14 @@ interface Guide {
 type TAB =
   | '스트리밍 가이드'
   | '음원 다운 가이드'
+  | '뮤비 다운 가이드'
   | '선물 가이드'
   | '음악 나누기 가이드';
 
 const TABS: TAB[] = [
   '스트리밍 가이드',
   '음원 다운 가이드',
+  '뮤비 다운 가이드',
   '선물 가이드',
   '음악 나누기 가이드',
 ];
@@ -46,7 +48,18 @@ const FILTERS: Record<TAB, Guide[]> = {
     { name: 'VIBE', images: ['/vibeDownload.jpg'] },
     { name: 'KAKAO', images: ['/kakaoDownload.jpg'] },
   ],
-  '선물 가이드': [{ name: '멜론', images: ['/melonGift.jpg'] }],
+  '뮤비 다운 가이드': [
+    { name: '멜론 캐시충전', images: ['/melonMVDownload.jpg'] },
+    { name: '멜론 PC', images: ['/melonMVDownload3.jpg'] },
+    { name: '멜론 Mobile', images: ['/melonMVDownload2.jpg'] },
+    { name: '벅스 PC', images: ['/bugsMVDownload.jpg'] },
+  ],
+  '선물 가이드': [
+    { name: '공지사항', images: ['/melonGift.jpg'] },
+    { name: '멜론 Android', images: ['/melonAppGift.jpg'] },
+    { name: '멜론 iOS', images: ['/meloniOSGift.jpg'] },
+    { name: '멜론 PC', images: ['/melonPcGift.jpg'] },
+  ],
   '음악 나누기 가이드': [{ name: '지니', images: ['/genieMusicShare.jpg'] }],
 };
 
@@ -74,7 +87,7 @@ export default function GuidePage() {
     if (!isDragging || !tabBarRef.current) return;
     e.preventDefault();
     const x = e.pageX - tabBarRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5; // 이동 속도 조절
+    const walk = (x - startX) * 1.5;
     tabBarRef.current.scrollLeft = scrollLeft - walk;
   };
 
