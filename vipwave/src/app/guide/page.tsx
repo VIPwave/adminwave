@@ -19,7 +19,7 @@ const guideData: Guide[] = [
   { name: "YouTube Music", images: ["/youtubemusicGuide.png"] },
   {
     name: "YouTube (PC / Mobile)",
-    images: ["/youtubePcGuide.jpg", "/youtubeMobileGuide.jpg"],
+    images: ["/youtube.jpeg"],
   },
 ];
 
