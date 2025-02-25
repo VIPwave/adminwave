@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import Modal from "@/lib/components/modal/modal";
-import { getDeviceType } from "@/lib/detectDevice";
-import { streamingLinks } from "@/lib/streamingLinks";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import Modal from '@/lib/components/modal/modal';
+import { getDeviceType } from '@/lib/detectDevice';
+import { streamingLinks } from '@/lib/streamingLinks';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 interface streamingLink {
   name: string;
@@ -23,24 +23,37 @@ export default function StreamingPage() {
     links: string[];
   } | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deviceType, setDeviceType] = useState<string>("");
+  const [deviceType, setDeviceType] = useState<string>('');
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     setDeviceType(getDeviceType());
   }, []);
 
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isModalOpen]);
+
   const openModal = (site: streamingLink) => {
     let links: string[] = [];
 
-    if (deviceType === "Android") {
+    if (deviceType === 'Android') {
       links = site.androidLinks || [];
-    } else if (deviceType === "iOS") {
+    } else if (deviceType === 'iOS') {
       links = site.iphoneLinks || [];
-    } else if (deviceType === "iPad") {
+    } else if (deviceType === 'iPad') {
       links = site.ipadLinks || [];
-    } else if (deviceType === "Windows") {
+    } else if (deviceType === 'Windows') {
       links = site.windowLinks || [];
-    } else if (deviceType === "Mac") {
+    } else if (deviceType === 'Mac') {
       links = site.macLinks || [];
     }
 
@@ -49,7 +62,7 @@ export default function StreamingPage() {
   };
 
   const handleButtonClick = (link: string) => {
-    window.open(link, "_blank");
+    window.open(link, '_blank');
   };
 
   return (
@@ -77,17 +90,26 @@ export default function StreamingPage() {
       <p className="font-bold mt-8 text-sm">스트리밍 리스트</p>
       <p className="my-4 text-sm break-keep">
         원클릭 링크가 정상 작동 되지 않는 분들은 총공팀에 문의 후 아래 가이드에
-        맞게 플레이리스트를 생성해주세요.
+        맞게 설정 후 재생목록을 생성해주세요.
       </p>
       <div className="flex flex-col justify-center items-center">
-        <Image
-          src={"/streamingList.jpeg"}
-          alt="streamingList"
-          width={550}
-          height={1182}
-          priority
-          unoptimized
-        />
+        <div className="relative w-[550px] max-w-full">
+          {!imageLoaded && (
+            <div className="absolute top-0 left-0 w-full h-full bg-gray-300 animate-pulse"></div>
+          )}
+          <Image
+            src={'/streamingList.jpeg'}
+            alt="streamingList"
+            width={550}
+            height={500}
+            priority
+            unoptimized
+            className={`transition-opacity duration-500 object-cover ${
+              imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+            onLoad={() => setImageLoaded(true)}
+          />
+        </div>
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {selectedSite && (
@@ -115,13 +137,13 @@ export default function StreamingPage() {
               <>
                 <div className="grid grid-cols-2 gap-2">
                   {selectedSite.links.map((link, index) => (
-                    <button
+                    <div
                       key={index}
                       onClick={() => handleButtonClick(link)}
-                      className=" text-center border-solid border-[1.5px] border-white p-3  cursor-pointer hover:bg-gray-200 transition"
+                      className=" text-center border-solid border-[1.5px] border-white p-3  cursor-pointer"
                     >
                       {selectedSite.name} {index + 1}
-                    </button>
+                    </div>
                   ))}
                 </div>
                 <p className="text-zinc-400 text-xs text-center">
