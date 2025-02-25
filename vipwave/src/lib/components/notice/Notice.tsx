@@ -24,6 +24,19 @@ export default function NoticeList(props: { title: string }) {
       </div>
 
       <div>
+        <Notice
+          title="G-DRAGON - TOO BAD (Official Video)"
+          url="https://youtu.be/o9DhvbqYzns?si=F1L0UQtbWL-vIRxH"
+        />
+        <Notice
+          title="G-DRAGON - DRAMA (Official Video)"
+          url="https://youtu.be/I8I51kSq448?si=WBEh3yrHAx5YilJl"
+        />
+        <Notice
+          title="원클릭 스트리밍 링크 바로가기"
+          url="/streaming"
+          isExtra={false}
+        />
         <Notice title="빅뱅음원총공팀 서포트" url="/support" isExtra={false} />
         <Notice
           title="케이타운포유 코엑스 광고"
