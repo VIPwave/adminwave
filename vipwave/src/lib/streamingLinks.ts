@@ -9,7 +9,7 @@ export const streamingLinks = [
       "https://iii.ad/2ccb02",
     ],
     iphoneLinks: ["https://iii.ad/67f7ff"],
-    ipadLinks: ["https://iii.ad/015dbd"],
+    ipadLinks: ["https://iii.ad/67f7ff"],
     windowLinks: [
       "https://iii.ad/3c01ec",
       "https://iii.ad/9286eb",
