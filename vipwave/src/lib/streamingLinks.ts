@@ -28,9 +28,9 @@ export const streamingLinks = [
     logo: "/genie.png",
     androidLinks: ["https://iii.ad/56fcc6"],
     iphoneLinks: ["https://iii.ad/2f3362"],
-    ipadLinks: [],
+    ipadLinks: ["https://iii.ad/2f3362"],
     windowLInks: ["https://iii.ad/c66a65"],
-    macLinks: [],
+    macLinks: ["https://iii.ad/c66a65"],
   },
   {
     name: "벅스",
