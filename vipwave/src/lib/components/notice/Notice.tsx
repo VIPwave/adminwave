@@ -25,6 +25,11 @@ export default function NoticeList(props: { title: string }) {
 
       <div>
         <Notice
+          title="해외 차트 총공 안내 #GD_Billboard_Global_200"
+          url="https://www.instagram.com/p/DGo0KYchQKO/"
+        />
+        <Notice title="[신규] 음악방송 투표 가이드 추가 안내" url="/guide" />
+        <Notice
           title="G-DRAGON - TOO BAD (Official Video)"
           url="https://youtu.be/o9DhvbqYzns?si=F1L0UQtbWL-vIRxH"
         />
@@ -38,14 +43,6 @@ export default function NoticeList(props: { title: string }) {
           isExtra={false}
         />
         <Notice title="빅뱅음원총공팀 서포트" url="/support" isExtra={false} />
-        <Notice
-          title="케이타운포유 코엑스 광고"
-          url="https://www.instagram.com/p/DGaL4nQBgno/"
-        />
-        <Notice
-          title="헬퍼 모집 안내"
-          url="https://x.com/bbvip00819/status/1891780223622054214?s=46"
-        />
         <Notice
           title="HOME SWEET HOME(feat. 태양, 대성) 멜론 일간 1위 76일 기록"
           url="https://www.instagram.com/p/DF4KnxtBRgd/"
