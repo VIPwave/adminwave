@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import Modal from '@/lib/components/modal/modal';
-import { getDeviceType } from '@/lib/detectDevice';
-import { streamingLinks } from '@/lib/streamingLinks';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import Modal from "@/lib/components/modal/modal";
+import { getDeviceType } from "@/lib/detectDevice";
+import { streamingLinks } from "@/lib/streamingLinks";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface streamingLink {
   name: string;
@@ -23,7 +23,7 @@ export default function StreamingPage() {
     links: string[];
   } | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deviceType, setDeviceType] = useState<string>('');
+  const [deviceType, setDeviceType] = useState<string>("");
   const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
@@ -32,28 +32,28 @@ export default function StreamingPage() {
 
   useEffect(() => {
     if (isModalOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     }
 
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     };
   }, [isModalOpen]);
 
   const openModal = (site: streamingLink) => {
     let links: string[] = [];
 
-    if (deviceType === 'Android') {
+    if (deviceType === "Android") {
       links = site.androidLinks || [];
-    } else if (deviceType === 'iOS') {
+    } else if (deviceType === "iOS") {
       links = site.iphoneLinks || [];
-    } else if (deviceType === 'iPad') {
+    } else if (deviceType === "iPad") {
       links = site.ipadLinks || [];
-    } else if (deviceType === 'Windows') {
+    } else if (deviceType === "Windows") {
       links = site.windowLinks || [];
-    } else if (deviceType === 'Mac') {
+    } else if (deviceType === "Mac") {
       links = site.macLinks || [];
     }
 
@@ -62,7 +62,7 @@ export default function StreamingPage() {
   };
 
   const handleButtonClick = (link: string) => {
-    window.open(link, '_blank');
+    window.open(link, "_blank");
   };
 
   return (
@@ -98,14 +98,15 @@ export default function StreamingPage() {
             <div className="absolute top-0 left-0 w-full h-full bg-gray-300 animate-pulse"></div>
           )}
           <Image
-            src={'/streamingList.jpg'}
+            //TODO
+            src={"/gdragon_playlist_ver3.jpeg"}
             alt="streamingList"
             width={550}
             height={500}
             priority
             unoptimized
             className={`transition-opacity duration-500 object-cover ${
-              imageLoaded ? 'opacity-100' : 'opacity-0'
+              imageLoaded ? "opacity-100" : "opacity-0"
             }`}
             onLoad={() => setImageLoaded(true)}
           />
