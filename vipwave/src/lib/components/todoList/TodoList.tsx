@@ -21,9 +21,10 @@ export default function TodoList(props: { title: string }) {
 
       <div className="mt-2">
         <Todo index={1} title="스밍 열심히 하기" isLink={false} />
-        <Todo index={2} title="음원 다운로드 참여하기" isLink={false} />
-        <Todo index={3} title="선물하기" isLink={false} />
-        <Todo index={4} title="지니 음악나누기" isLink={false} />
+        <Todo index={2} title="음악방송 투표 참여하기" isLink={false} />
+        <Todo index={3} title="음원 다운로드 참여하기" isLink={false} />
+        <Todo index={4} title="선물하기" isLink={false} />
+        <Todo index={5} title="지니 음악나누기" isLink={false} />
       </div>
     </>
   );
