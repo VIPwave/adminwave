@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import Modal from "@/lib/components/modal/modal";
-import { getDeviceType } from "@/lib/detectDevice";
-import { streamingLinks } from "@/lib/streamingLinks";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import Modal from '@/lib/components/modal/modal';
+import { getDeviceType } from '@/lib/detectDevice';
+import { streamingLinks } from '@/lib/streamingLinks';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 interface streamingLink {
   name: string;
@@ -23,7 +23,7 @@ export default function StreamingPage() {
     links: string[];
   } | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deviceType, setDeviceType] = useState<string>("");
+  const [deviceType, setDeviceType] = useState<string>('');
   const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
@@ -32,28 +32,28 @@ export default function StreamingPage() {
 
   useEffect(() => {
     if (isModalOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     }
 
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     };
   }, [isModalOpen]);
 
   const openModal = (site: streamingLink) => {
     let links: string[] = [];
 
-    if (deviceType === "Android") {
+    if (deviceType === 'Android') {
       links = site.androidLinks || [];
-    } else if (deviceType === "iOS") {
+    } else if (deviceType === 'iOS') {
       links = site.iphoneLinks || [];
-    } else if (deviceType === "iPad") {
+    } else if (deviceType === 'iPad') {
       links = site.ipadLinks || [];
-    } else if (deviceType === "Windows") {
+    } else if (deviceType === 'Windows') {
       links = site.windowLinks || [];
-    } else if (deviceType === "Mac") {
+    } else if (deviceType === 'Mac') {
       links = site.macLinks || [];
     }
 
@@ -62,12 +62,20 @@ export default function StreamingPage() {
   };
 
   const handleButtonClick = (link: string) => {
-    window.open(link, "_blank");
+    window.open(link, '_blank');
   };
 
   return (
     <div className="px-5">
-      <p className="font-bold my-6 text-sm">원클릭 링크</p>
+      <p className="font-bold mt-6 mb-2 text-sm">원클릭 링크</p>
+      <p className="my-4 text-sm break-keep">
+        원클릭 링크를 실행하기 전, 아래 네 가지 항목을 모두 체크 후에
+        담아주세요.
+      </p>
+      <p className="text-sm break-keep">☑️ 재생목록 비우기</p>
+      <p className="text-sm break-keep">☑️ 중복곡 허용</p>
+      <p className="text-sm break-keep">{`☑️ 설정 > "재생목록 맨끝에 추가" 변경`}</p>
+      <p className="mb-4 text-sm break-keep">☑️ 음원 다운로드 파일 삭제</p>
       <div className="flex justify-start flex-wrap w-full onclick-link-gap">
         {streamingLinks.map((site) => (
           <div
@@ -99,14 +107,14 @@ export default function StreamingPage() {
           )}
           <Image
             //TODO
-            src={"/gdragon_playlist_ver3.jpeg"}
+            src={'/gdragon_playlist_ver3.jpeg'}
             alt="streamingList"
             width={550}
             height={500}
             priority
             unoptimized
             className={`transition-opacity duration-500 object-cover ${
-              imageLoaded ? "opacity-100" : "opacity-0"
+              imageLoaded ? 'opacity-100' : 'opacity-0'
             }`}
             onLoad={() => setImageLoaded(true)}
           />
