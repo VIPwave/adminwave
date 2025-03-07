@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import SlideMenu from '../slideMenu/slideMenu';
 
 const navItems = [
   {
@@ -40,14 +41,13 @@ export default function Header() {
 
   return (
     <header className="flex items-center justify-between px-5 border-b border-gray-800 text-sm">
-      <Link
-        className="font-bold"
-        href="/"
-        key={0}
-        onClick={() => setActiveTab(0)}
-      >
-        VIPWAVE
-      </Link>
+      {path === '/guide' ? (
+        <SlideMenu />
+      ) : (
+        <Link className="font-bold" href="/" onClick={() => setActiveTab(0)}>
+          VIPWAVE
+        </Link>
+      )}
       <nav className="flex gap-6">
         {navItems.map(
           (item, index) =>
