@@ -5,66 +5,81 @@ import Link from 'next/link';
 const SlideMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleIsOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
-      <button className="p-2 z-50" onClick={() => setIsOpen(true)}>
-        <Menu size={24} />
+      <button className="p-2 z-50" onClick={handleIsOpen}>
+        <Menu size={24} color="white" />
       </button>
 
       {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 z-40"
-          onClick={() => setIsOpen(false)}
+          onClick={handleIsOpen}
         />
       )}
 
       <aside
-        className={`absolute top-0 left-0 h-full w-[250px] bg-white shadow-lg p-5 transition-transform duration-500 ease-out z-50 ${
+        className={`absolute top-0 left-0 h-full w-[250px] bg-black shadow-lg p-5 transition-transform duration-500 ease-out z-50 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <button
-          className="absolute top-4 right-4"
-          onClick={() => setIsOpen(false)}
-        >
-          <X size={24} color="black" />
+        <button className="absolute top-4 right-4" onClick={handleIsOpen}>
+          <X size={24} color="white" />
         </button>
 
         <nav className="mt-10 space-y-4">
           <Link
             href="/"
-            className="block text-lg text-black font-bold"
-            onClick={() => setIsOpen(false)}
+            className="block text-lg text-white font-bold"
+            onClick={handleIsOpen}
           >
-            VIPWAVE
+            <div className="mb-10">VIPWAVE</div>
           </Link>
           <Link
-            href="/chart"
-            className="block text-lg text-black font-bold"
-            onClick={() => setIsOpen(false)}
+            href="/guide/streaming"
+            className="block text-lg text-white font-bold"
+            onClick={handleIsOpen}
           >
-            차트
+            스트리밍 가이드
           </Link>
           <Link
-            href="/streaming"
-            className="block text-lg text-black font-bold"
-            onClick={() => setIsOpen(false)}
+            href="/guide/musicDownload"
+            className="block text-lg text-white font-bold"
+            onClick={handleIsOpen}
           >
-            원클릭
+            음원 다운 가이드
           </Link>
           <Link
-            href="/guide"
-            className="block text-lg text-black font-bold"
-            onClick={() => setIsOpen(false)}
+            href="/guide/mvDownload"
+            className="block text-lg text-white font-bold"
+            onClick={handleIsOpen}
           >
-            가이드
+            뮤비 다운 가이드
           </Link>
           <Link
-            href="/support"
-            className="block text-lg text-black font-bold"
-            onClick={() => setIsOpen(false)}
+            href="/guide/musicGift"
+            className="block text-lg text-white font-bold"
+            onClick={handleIsOpen}
           >
-            서포트
+            선물 가이드
+          </Link>
+          <Link
+            href="/guide/musicShare"
+            className="block text-lg text-white font-bold"
+            onClick={handleIsOpen}
+          >
+            음악 나누기 가이드
+          </Link>
+          <Link
+            href="/guide/broadcast"
+            className="block text-lg text-white font-bold"
+            onClick={handleIsOpen}
+          >
+            음악방송 가이드
           </Link>
         </nav>
       </aside>

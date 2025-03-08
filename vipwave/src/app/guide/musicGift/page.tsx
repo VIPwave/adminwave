@@ -4,20 +4,14 @@ import { useGuide } from '@/hooks/useGuide';
 import GuideSelector from '@/components/guide/guideSelector';
 import GuideImage from '@/components/guide/guideImage';
 
-export default function GuidePage() {
-  const {
-    selectedTab,
-    currentGuide,
-    imageLoaded,
-    changeGuide,
-    handleImageLoad,
-  } = useGuide();
+const MusicGiftGuidePage = () => {
+  const { currentGuide, imageLoaded, changeGuide, handleImageLoad } =
+    useGuide();
 
   return (
     <div className="relative min-w-full">
-      {/* <GuideTabs selectedTab={selectedTab} changeTab={changeTab} /> */}
       <GuideSelector
-        selectedTab={selectedTab}
+        selectedTab={'선물 가이드'}
         currentGuide={currentGuide}
         changeGuide={changeGuide}
       />
@@ -28,4 +22,6 @@ export default function GuidePage() {
       />
     </div>
   );
-}
+};
+
+export default MusicGiftGuidePage;

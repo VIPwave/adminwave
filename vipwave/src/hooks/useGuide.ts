@@ -1,4 +1,3 @@
-// hooks/useGuide.ts
 import { useState } from 'react';
 import { TAB, FILTERS, Guide } from '@/lib/guideData';
 
