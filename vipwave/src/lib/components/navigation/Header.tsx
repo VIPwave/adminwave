@@ -4,6 +4,8 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import SlideMenu from '../slideMenu/slideMenu';
+import { slideMenuPaths } from '@/lib/slideMenuPaths';
 
 const navItems = [
   {
@@ -18,7 +20,6 @@ const navItems = [
     name: '원클릭',
     href: '/streaming',
   },
-  ,
   {
     name: '가이드',
     href: '/guide',
@@ -34,20 +35,22 @@ export default function Header() {
   const path = usePathname();
 
   useEffect(() => {
-    const nextTab = navItems.findIndex((item) => item && item.href === path);
-    setActiveTab(nextTab);
+    const nextTab = slideMenuPaths.includes(path)
+      ? navItems.findIndex((item) => item.href === '/guide')
+      : navItems.findIndex((item) => item.href === path);
+
+    setActiveTab(nextTab !== -1 ? nextTab : 0);
   }, [path]);
 
   return (
     <header className="flex items-center justify-between px-5 border-b border-gray-800 text-sm">
-      <Link
-        className="font-bold"
-        href="/"
-        key={0}
-        onClick={() => setActiveTab(0)}
-      >
-        VIPWAVE
-      </Link>
+      {slideMenuPaths.includes(path) ? (
+        <SlideMenu />
+      ) : (
+        <Link className="font-bold" href="/" onClick={() => setActiveTab(0)}>
+          VIPWAVE
+        </Link>
+      )}
       <nav className="flex gap-6">
         {navItems.map(
           (item, index) =>

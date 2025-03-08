@@ -1,23 +1,16 @@
 'use client';
 
-import { useGuide } from '@/hooks/useGuide';
-import GuideSelector from '@/components/guide/guideSelector';
 import GuideImage from '@/components/guide/guideImage';
+import GuideSelector from '@/components/guide/guideSelector';
+import { useGuide } from '@/hooks/useGuide';
 
-export default function GuidePage() {
-  const {
-    selectedTab,
-    currentGuide,
-    imageLoaded,
-    changeGuide,
-    handleImageLoad,
-  } = useGuide();
-
+const MusicDownloadGuidePage = () => {
+  const { currentGuide, imageLoaded, changeGuide, handleImageLoad } =
+    useGuide();
   return (
     <div className="relative min-w-full">
-      {/* <GuideTabs selectedTab={selectedTab} changeTab={changeTab} /> */}
       <GuideSelector
-        selectedTab={selectedTab}
+        selectedTab="음원 다운 가이드"
         currentGuide={currentGuide}
         changeGuide={changeGuide}
       />
@@ -28,4 +21,6 @@ export default function GuidePage() {
       />
     </div>
   );
-}
+};
+
+export default MusicDownloadGuidePage;
