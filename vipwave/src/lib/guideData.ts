@@ -41,7 +41,11 @@ export const FILTERS: Record<TAB, Guide[]> = {
     },
     {
       name: 'YouTube (PC / Mobile)',
-      images: ['/guide/streaming/youtubeMVGuide.jpeg'],
+      images: [
+        '/guide/streaming/youtubeMVGuide1.jpg',
+        '/guide/streaming/youtubeMVGuide2.jpg',
+        '/guide/streaming/youtubeMVGuide3.jpg',
+      ],
     },
   ],
   '음원 다운 가이드': [
