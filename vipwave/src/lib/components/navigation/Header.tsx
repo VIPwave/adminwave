@@ -20,7 +20,6 @@ const navItems = [
     name: '원클릭',
     href: '/streaming',
   },
-  ,
   {
     name: '가이드',
     href: '/guide',
@@ -36,8 +35,11 @@ export default function Header() {
   const path = usePathname();
 
   useEffect(() => {
-    const nextTab = navItems.findIndex((item) => item && item.href === path);
-    setActiveTab(nextTab);
+    const nextTab = slideMenuPaths.includes(path)
+      ? navItems.findIndex((item) => item.href === '/guide')
+      : navItems.findIndex((item) => item.href === path);
+
+    setActiveTab(nextTab !== -1 ? nextTab : 0);
   }, [path]);
 
   return (

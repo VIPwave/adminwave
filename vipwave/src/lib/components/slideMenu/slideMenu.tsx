@@ -11,7 +11,7 @@ const SlideMenu = () => {
 
   return (
     <>
-      <button className="p-2 z-50" onClick={handleIsOpen}>
+      <button onClick={handleIsOpen}>
         <Menu size={24} color="white" />
       </button>
 
