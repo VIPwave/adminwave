@@ -21,6 +21,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          cd /vipwave  # 프로젝트 폴더로 이동
+          pwd
+          cd vipwave  # 프로젝트 폴더로 이동
           docker build -t ${{ secrets.DOCKERHUB_REPO }} .
           docker push ${{ secrets.DOCKERHUB_REPO }}
