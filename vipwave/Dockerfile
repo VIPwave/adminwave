@@ -4,11 +4,11 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # 패키지 설치
-COPY VIPwave/vipwave/package.json VIPwave/vipwave/package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm ci
 
 # 애플리케이션 빌드
-COPY VIPwave/vipwave ./
+COPY /vipwave ./
 RUN npm run build
 
 # 실행 환경 구성
