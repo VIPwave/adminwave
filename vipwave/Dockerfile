@@ -8,7 +8,7 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 # 애플리케이션 빌드
-COPY vipwave ./
+COPY . .
 RUN npm run build
 
 # 실행 환경 구성
