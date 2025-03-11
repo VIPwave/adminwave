@@ -1,13 +1,35 @@
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ChevronDown, ChevronUp, Menu, X } from 'lucide-react';
 import Link from 'next/link';
+import { navItems } from '@/lib/navItems';
+import { slideMenuItems } from '@/lib/slideMenuPaths';
+import { usePathname } from 'next/navigation';
 
 const SlideMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
 
   const handleIsOpen = () => {
     setIsOpen(!isOpen);
   };
+
+  const toggleGuideMenu = () => {
+    setIsGuideOpen(!isGuideOpen);
+  };
+
+  const path = usePathname();
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
 
   return (
     <>
@@ -23,64 +45,79 @@ const SlideMenu = () => {
       )}
 
       <aside
-        className={`absolute top-0 left-0 h-full w-[250px] bg-black shadow-lg p-5 transition-transform duration-500 ease-out z-50 ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed top-0 right-0 h-full w-[250px] bg-black shadow-lg p-5 transition-transform duration-500 ease-out z-50 ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <button className="absolute top-4 right-4" onClick={handleIsOpen}>
-          <X size={24} color="white" />
-        </button>
+        <div className="flex justify-between">
+          <Link
+            href={'/'}
+            onClick={handleIsOpen}
+            className={`block ${
+              path === '/' ? 'font-semibold text-whitㄷ' : 'text-gray-300'
+            }`}
+          >
+            VIPWAVE
+          </Link>
+          <button className="absolute top-4 right-4" onClick={handleIsOpen}>
+            <X size={24} color="white" />
+          </button>
+        </div>
+        <nav className="mt-4 space-y-4">
+          {navItems.map((item, index) => (
+            <div key={index}>
+              {item.name === '가이드' ? (
+                <>
+                  <div
+                    onClick={toggleGuideMenu}
+                    className={`flex items-center justify-between w-full ${
+                      path.startsWith('/guide')
+                        ? 'underline underline-offset-[6px] font-semibold text-white'
+                        : 'text-gray-300'
+                    }`}
+                  >
+                    {item.name}
+                    {isGuideOpen ? (
+                      <ChevronUp size={20} color="white" />
+                    ) : (
+                      <ChevronDown size={20} color="white" />
+                    )}
+                  </div>
 
-        <nav className="mt-10 space-y-4">
-          <Link
-            href="/"
-            className="block text-lg text-white font-bold"
-            onClick={handleIsOpen}
-          >
-            <div className="mb-10">VIPWAVE</div>
-          </Link>
-          <Link
-            href="/guide/streaming"
-            className="block text-lg text-white font-bold"
-            onClick={handleIsOpen}
-          >
-            스트리밍 가이드
-          </Link>
-          <Link
-            href="/guide/musicDownload"
-            className="block text-lg text-white font-bold"
-            onClick={handleIsOpen}
-          >
-            음원 다운 가이드
-          </Link>
-          <Link
-            href="/guide/mvDownload"
-            className="block text-lg text-white font-bold"
-            onClick={handleIsOpen}
-          >
-            뮤비 다운 가이드
-          </Link>
-          <Link
-            href="/guide/musicGift"
-            className="block text-lg text-white font-bold"
-            onClick={handleIsOpen}
-          >
-            선물 가이드
-          </Link>
-          <Link
-            href="/guide/musicShare"
-            className="block text-lg text-white font-bold"
-            onClick={handleIsOpen}
-          >
-            음악 나누기 가이드
-          </Link>
-          <Link
-            href="/guide/broadcast"
-            className="block text-lg text-white font-bold"
-            onClick={handleIsOpen}
-          >
-            음악방송 가이드
-          </Link>
+                  {isGuideOpen && (
+                    <div className="mt-2 ml-4 space-y-2">
+                      {slideMenuItems.map((subItem, subIndex) => (
+                        <Link
+                          href={subItem.href}
+                          key={subIndex}
+                          onClick={handleIsOpen}
+                          className={`block text-[12px] ${
+                            path === subItem.href
+                              ? 'underline underline-offset-[6px] font-semibold text-white'
+                              : 'text-gray-300'
+                          }`}
+                        >
+                          {subItem.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <Link
+                  href={item.href}
+                  onClick={handleIsOpen}
+                  className={`block ${
+                    path === item.href
+                      ? 'underline underline-offset-[6px] font-semibold text-white'
+                      : 'text-gray-300'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              )}
+            </div>
+          ))}
         </nav>
       </aside>
     </>
