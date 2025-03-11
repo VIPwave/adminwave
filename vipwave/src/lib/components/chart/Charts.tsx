@@ -16,7 +16,7 @@ const columns: ColumnDef<Song>[] = [
     enableSorting: false,
     cell: (row) => {
       const url = String(row.getValue());
-      return <Image src={url} alt="album_image" width={56} height={56} />;
+      return <Image src={url} alt="album_image" width={56} height={56} unoptimized />;
     },
     size: 35,
   },
