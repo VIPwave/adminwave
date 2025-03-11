@@ -39,6 +39,6 @@ jobs:
             key: ${{ secrets.AWS_SSH_PRIVATE_KEY }}
             script: |
               docker pull ${{ secrets.DOCKERHUB_REPO }}
-              docker stop vipwavetest || true
-              docker rm vipwavetest || true
-              docker run -d --network docker-network -p 3000:3000 --name vipwavetest ${{ secrets.DOCKERHUB_REPO }}
+              docker stop vipwave || true
+              docker rm vipwave || true
+              docker run -d --network docker-network -p 3000:3000 --name vipwave ${{ secrets.DOCKERHUB_REPO }}
