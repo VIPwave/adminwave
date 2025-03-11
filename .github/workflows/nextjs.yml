@@ -41,4 +41,4 @@ jobs:
               docker pull ${{ secrets.DOCKERHUB_REPO }}
               docker stop vipwavetest || true
               docker rm vipwavetest || true
-              docker run -d -p 3000:3000 --name vipwavetest ${{ secrets.DOCKERHUB_REPO }}
+              docker run -d --network docker-network -p 3000:3000 --name vipwavetest ${{ secrets.DOCKERHUB_REPO }}
