@@ -1,14 +1,31 @@
 import { useEffect, useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { ChevronDown, ChevronUp, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { navItems } from '../navigation/Header';
+import { slideMenuItems } from '@/lib/slideMenuPaths';
 
 const SlideMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
 
+  //const [activeTab, setActiveTab] = useState(0);
   const handleIsOpen = () => {
     setIsOpen(!isOpen);
   };
+
+  const toggleGuideMenu = () => {
+    setIsGuideOpen(!isGuideOpen);
+  };
+
+  //const path = usePathname();
+
+  // useEffect(() => {
+  //   const nextTab = slideMenuPaths.includes(path)
+  //     ? navItems.findIndex((item) => item.href === '/guide')
+  //     : navItems.findIndex((item) => item.href === path);
+
+  //   setActiveTab(nextTab !== -1 ? nextTab : 0);
+  // }, [path]);
 
   useEffect(() => {
     if (isOpen) {
@@ -65,69 +82,47 @@ const SlideMenu = () => {
         )}
       </nav> */}
         <nav className="mt-10 space-y-4">
-          {navItems.map(
-            (item, index) =>
-              item &&
-              item.name !== 'home' && (
+          {navItems.map((item, index) => (
+            <div key={index}>
+              {item.name === '가이드' ? (
+                <>
+                  <div
+                    onClick={toggleGuideMenu}
+                    className="flex items-center justify-between w-full text-lg text-white font-bold"
+                  >
+                    {item.name}
+                    {isGuideOpen ? (
+                      <ChevronUp size={20} />
+                    ) : (
+                      <ChevronDown size={20} />
+                    )}
+                  </div>
+
+                  {isGuideOpen && (
+                    <div className="mt-2 ml-4 space-y-2">
+                      {slideMenuItems.map((item, index) => (
+                        <Link
+                          href={item.href}
+                          key={index}
+                          className="block text-md text-gray-300"
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : (
                 <Link
                   href={item.href}
-                  key={index}
                   onClick={handleIsOpen}
                   className="block text-lg text-white font-bold"
                 >
                   {item.name}
                 </Link>
-              )
-          )}
-          {/* <Link
-            href="/"
-            className="block text-lg text-white font-bold"
-            onClick={handleIsOpen}
-          >
-            <div className="mb-10">VIPWAVE</div>
-          </Link>
-          <Link
-            href="/guide/streaming"
-            className="block text-lg text-white font-bold"
-            onClick={handleIsOpen}
-          >
-            스트리밍 가이드
-          </Link>
-          <Link
-            href="/guide/musicDownload"
-            className="block text-lg text-white font-bold"
-            onClick={handleIsOpen}
-          >
-            음원 다운 가이드
-          </Link>
-          <Link
-            href="/guide/mvDownload"
-            className="block text-lg text-white font-bold"
-            onClick={handleIsOpen}
-          >
-            뮤비 다운 가이드
-          </Link>
-          <Link
-            href="/guide/musicGift"
-            className="block text-lg text-white font-bold"
-            onClick={handleIsOpen}
-          >
-            선물 가이드
-          </Link>
-          <Link
-            href="/guide/musicShare"
-            className="block text-lg text-white font-bold"
-            onClick={handleIsOpen}
-          >
-            음악 나누기 가이드
-          </Link>
-          <Link
-            href="/guide/broadcast"
-            className="block text-lg text-white font-bold"
-            onClick={handleIsOpen}
-          >
-            음악방송 가이드
-          </Link> */}
+              )}
+            </div>
+          ))}
         </nav>
       </aside>
     </>
