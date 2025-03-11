@@ -45,15 +45,16 @@ const SlideMenu = () => {
       )}
 
       <aside
-        className={`absolute top-0 left-0 h-full w-[250px] bg-black shadow-lg p-5 transition-transform duration-500 ease-out z-50 ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed top-0 right-0 h-full w-[250px] bg-black shadow-lg p-5 transition-transform duration-500 ease-out z-50 ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div className="flex justify-between">
           <Link
             href={'/'}
-            className={`block text-[16px] ${
-              path === '/' ? 'text-primary font-semibold' : 'text-white'
+            onClick={handleIsOpen}
+            className={`block ${
+              path === '/' ? 'font-semibold text-whitㄷ' : 'text-gray-300'
             }`}
           >
             VIPWAVE
@@ -69,10 +70,10 @@ const SlideMenu = () => {
                 <>
                   <div
                     onClick={toggleGuideMenu}
-                    className={`flex items-center justify-between w-full text-[16px]  ${
+                    className={`flex items-center justify-between w-full ${
                       path.startsWith('/guide')
-                        ? 'text-primary font-semibold'
-                        : 'text-white'
+                        ? 'underline underline-offset-[6px] font-semibold text-white'
+                        : 'text-gray-300'
                     }`}
                   >
                     {item.name}
@@ -89,9 +90,10 @@ const SlideMenu = () => {
                         <Link
                           href={subItem.href}
                           key={subIndex}
-                          className={`block text-[14px]  ${
+                          onClick={handleIsOpen}
+                          className={`block text-[12px] ${
                             path === subItem.href
-                              ? 'text-primary font-semibold'
+                              ? 'underline underline-offset-[6px] font-semibold text-white'
                               : 'text-gray-300'
                           }`}
                         >
@@ -105,10 +107,10 @@ const SlideMenu = () => {
                 <Link
                   href={item.href}
                   onClick={handleIsOpen}
-                  className={`block text-[16px] ${
+                  className={`block ${
                     path === item.href
-                      ? 'text-primary font-semibold'
-                      : 'text-white'
+                      ? 'underline underline-offset-[6px] font-semibold text-white'
+                      : 'text-gray-300'
                   }`}
                 >
                   {item.name}
