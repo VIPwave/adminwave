@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { ChevronDown, ChevronUp, Menu, X } from 'lucide-react';
 import Link from 'next/link';
-import { navItems } from '../navigation/Header';
+import { navItems } from '@/lib/navItems';
 import { slideMenuItems } from '@/lib/slideMenuPaths';
+import { usePathname } from 'next/navigation';
 
 const SlideMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
 
-  //const [activeTab, setActiveTab] = useState(0);
   const handleIsOpen = () => {
     setIsOpen(!isOpen);
   };
@@ -17,15 +17,7 @@ const SlideMenu = () => {
     setIsGuideOpen(!isGuideOpen);
   };
 
-  //const path = usePathname();
-
-  // useEffect(() => {
-  //   const nextTab = slideMenuPaths.includes(path)
-  //     ? navItems.findIndex((item) => item.href === '/guide')
-  //     : navItems.findIndex((item) => item.href === path);
-
-  //   setActiveTab(nextTab !== -1 ? nextTab : 0);
-  // }, [path]);
+  const path = usePathname();
 
   useEffect(() => {
     if (isOpen) {
@@ -57,56 +49,53 @@ const SlideMenu = () => {
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <button className="absolute top-4 right-4" onClick={handleIsOpen}>
-          <X size={24} color="white" />
-        </button>
-        {/* <nav className="flex gap-6">
-        {navItems.map(
-          (item, index) =>
-            item &&
-            item.name !== 'home' && (
-              <Link
-                href={item.href}
-                key={index}
-                className={cn(
-                  'py-4 px-1 border-b-2 -mb-px',
-                  index === activeTab
-                    ? 'bold'
-                    : 'border-transparent text-gray-500'
-                )}
-                onClick={() => setActiveTab(index)}
-              >
-                {item.name}
-              </Link>
-            )
-        )}
-      </nav> */}
-        <nav className="mt-10 space-y-4">
+        <div className="flex justify-between">
+          <Link
+            href={'/'}
+            className={`block text-[16px] ${
+              path === '/' ? 'text-primary font-semibold' : 'text-white'
+            }`}
+          >
+            VIPWAVE
+          </Link>
+          <button className="absolute top-4 right-4" onClick={handleIsOpen}>
+            <X size={24} color="white" />
+          </button>
+        </div>
+        <nav className="mt-4 space-y-4">
           {navItems.map((item, index) => (
             <div key={index}>
               {item.name === '가이드' ? (
                 <>
                   <div
                     onClick={toggleGuideMenu}
-                    className="flex items-center justify-between w-full text-lg text-white font-bold"
+                    className={`flex items-center justify-between w-full text-[16px]  ${
+                      path.startsWith('/guide')
+                        ? 'text-primary font-semibold'
+                        : 'text-white'
+                    }`}
                   >
                     {item.name}
                     {isGuideOpen ? (
-                      <ChevronUp size={20} />
+                      <ChevronUp size={20} color="white" />
                     ) : (
-                      <ChevronDown size={20} />
+                      <ChevronDown size={20} color="white" />
                     )}
                   </div>
 
                   {isGuideOpen && (
                     <div className="mt-2 ml-4 space-y-2">
-                      {slideMenuItems.map((item, index) => (
+                      {slideMenuItems.map((subItem, subIndex) => (
                         <Link
-                          href={item.href}
-                          key={index}
-                          className="block text-md text-gray-300"
+                          href={subItem.href}
+                          key={subIndex}
+                          className={`block text-[14px]  ${
+                            path === subItem.href
+                              ? 'text-primary font-semibold'
+                              : 'text-gray-300'
+                          }`}
                         >
-                          {item.name}
+                          {subItem.name}
                         </Link>
                       ))}
                     </div>
@@ -116,7 +105,11 @@ const SlideMenu = () => {
                 <Link
                   href={item.href}
                   onClick={handleIsOpen}
-                  className="block text-lg text-white font-bold"
+                  className={`block text-[16px] ${
+                    path === item.href
+                      ? 'text-primary font-semibold'
+                      : 'text-white'
+                  }`}
                 >
                   {item.name}
                 </Link>
