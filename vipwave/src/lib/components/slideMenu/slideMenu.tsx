@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
+import { navItems } from '../navigation/Header';
 
 const SlideMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,9 +43,43 @@ const SlideMenu = () => {
         <button className="absolute top-4 right-4" onClick={handleIsOpen}>
           <X size={24} color="white" />
         </button>
-
+        {/* <nav className="flex gap-6">
+        {navItems.map(
+          (item, index) =>
+            item &&
+            item.name !== 'home' && (
+              <Link
+                href={item.href}
+                key={index}
+                className={cn(
+                  'py-4 px-1 border-b-2 -mb-px',
+                  index === activeTab
+                    ? 'bold'
+                    : 'border-transparent text-gray-500'
+                )}
+                onClick={() => setActiveTab(index)}
+              >
+                {item.name}
+              </Link>
+            )
+        )}
+      </nav> */}
         <nav className="mt-10 space-y-4">
-          <Link
+          {navItems.map(
+            (item, index) =>
+              item &&
+              item.name !== 'home' && (
+                <Link
+                  href={item.href}
+                  key={index}
+                  onClick={handleIsOpen}
+                  className="block text-lg text-white font-bold"
+                >
+                  {item.name}
+                </Link>
+              )
+          )}
+          {/* <Link
             href="/"
             className="block text-lg text-white font-bold"
             onClick={handleIsOpen}
@@ -92,7 +127,7 @@ const SlideMenu = () => {
             onClick={handleIsOpen}
           >
             음악방송 가이드
-          </Link>
+          </Link> */}
         </nav>
       </aside>
     </>

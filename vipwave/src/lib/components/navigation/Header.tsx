@@ -7,28 +7,28 @@ import Link from 'next/link';
 import SlideMenu from '../slideMenu/slideMenu';
 //import { slideMenuPaths } from '@/lib/slideMenuPaths';
 
-// const navItems = [
-//   {
-//     name: 'home',
-//     href: '/',
-//   },
-//   {
-//     name: '차트',
-//     href: '/chart',
-//   },
-//   {
-//     name: '원클릭',
-//     href: '/streaming',
-//   },
-//   {
-//     name: '가이드',
-//     href: '/guide',
-//   },
-//   {
-//     name: '서포트',
-//     href: '/support',
-//   },
-// ];
+export const navItems = [
+  {
+    name: 'home',
+    href: '/',
+  },
+  {
+    name: '차트',
+    href: '/chart',
+  },
+  {
+    name: '원클릭',
+    href: '/streaming',
+  },
+  {
+    name: '가이드',
+    href: '/guide',
+  },
+  {
+    name: '서포트',
+    href: '/support',
+  },
+];
 
 export default function Header() {
   //const [activeTab, setActiveTab] = useState(0);
