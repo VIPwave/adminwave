@@ -89,11 +89,11 @@ export default function StreamingPage() {
       <p className="text-sm break-keep">☑️ 중복곡 허용</p>
       <p className="text-sm break-keep">{`☑️ 설정 > "재생목록 맨끝에 추가" 변경`}</p>
       <p className="mb-4 text-sm break-keep">☑️ 음원 다운로드 파일 삭제</p>
-      <div className="flex justify-between flex-wrap w-full gap-5">
+      <div className="grid grid-cols-2 gap-5 w-full mb-8">
         {streamingLinks.map((site) => (
           <div
             key={site.name}
-            className="flex px-4 items-center gap-4 bg-chart text-white text-[16px] w-[calc(50%-1.6vw)] h-[60px]"
+            className="flex px-4 py-3 items-center gap-4 bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
             onClick={() => openModal(site, true)}
           >
             <Image
@@ -111,11 +111,11 @@ export default function StreamingPage() {
       </div>
 
       <p className="font-bold text-sm mb-4 mt-8">해외 차트 스트리밍</p>
-      <div className="flex justify-between flex-wrap w-full gap-5 mb-8">
+      <div className="grid grid-cols-2 gap-5 w-full mb-8">
         {globalStreamingLinks.map((site) => (
           <div
             key={site.name}
-            className="flex px-4 items-center gap-4 bg-chart text-white text-[16px] w-[calc(50%-1.6vw)] h-[60px]"
+            className="flex px-4 py-3 items-center gap-4 bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
             onClick={() => openModal(site, false)}
           >
             <Image

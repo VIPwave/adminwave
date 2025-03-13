@@ -85,14 +85,14 @@ export const globalStreamingLinks = [
     ],
   },
   {
-    name: 'AppleMusic',
+    name: 'Apple Music',
     logo: '/icons/appleMusic.png',
     links: [
       'https://music.apple.com/kr/playlist/%C3%BCbermensch/pl.u-leyl09ATM6JD50p',
     ],
   },
   {
-    name: 'YoutubeMusic',
+    name: 'Youtube Music',
     logo: '/icons/youtubeMusic.png',
     links: [
       'https://music.youtube.com/playlist?list=PL7Q0IDeVJ8kS3HoGBiajTRNV5deo8wMHA&si=fVz_WhTuRlOjt0fJ',
