@@ -76,7 +76,7 @@ export default function StreamingPage() {
       <p className="text-sm break-keep">☑️ 중복곡 허용</p>
       <p className="text-sm break-keep">{`☑️ 설정 > "재생목록 맨끝에 추가" 변경`}</p>
       <p className="mb-4 text-sm break-keep">☑️ 음원 다운로드 파일 삭제</p>
-      <div className="flex justify-start flex-wrap w-full onclick-link-gap">
+      <div className="flex justify-between flex-wrap w-full gap-5">
         {streamingLinks.map((site) => (
           <div
             key={site.name}
@@ -89,7 +89,6 @@ export default function StreamingPage() {
               width={30}
               height={30}
               priority
-              unoptimized
             />
             {site.name}
           </div>
@@ -103,16 +102,14 @@ export default function StreamingPage() {
       <div className="flex flex-col justify-center items-center">
         <div className="relative w-[550px] max-w-full">
           {!imageLoaded && (
-            <div className="absolute top-0 left-0 w-full h-full bg-gray-300 animate-pulse"></div>
+            <div className="absolute top-0 left-0 w-full h-full bg-gray-300 animate-pulse" />
           )}
           <Image
-            //TODO
             src={'/gdragon_playlist_ver3.jpeg'}
             alt="streamingList"
             width={550}
             height={500}
             priority
-            unoptimized
             className={`transition-opacity duration-500 object-cover ${
               imageLoaded ? 'opacity-100' : 'opacity-0'
             }`}
@@ -130,7 +127,6 @@ export default function StreamingPage() {
                 width={30}
                 height={30}
                 priority
-                unoptimized
               />
               {selectedSite.name} 원클릭 ({deviceType})
             </div>
