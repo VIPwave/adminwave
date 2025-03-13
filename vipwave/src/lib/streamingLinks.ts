@@ -75,3 +75,34 @@ export const streamingLinks = [
     macLinks: [],
   },
 ];
+
+export const globalStreamingLinks = [
+  {
+    name: 'Spotify',
+    logo: '/icons/spotify.png',
+    links: [
+      'https://open.spotify.com/playlist/0SRJ4lqBswGsTu3LQJ5dje?si=A-uNGK12QqizKVmu6vbw5Q',
+    ],
+  },
+  {
+    name: 'AppleMusic',
+    logo: '/icons/appleMusic.png',
+    links: [
+      'https://music.apple.com/kr/playlist/%C3%BCbermensch/pl.u-leyl09ATM6JD50p',
+    ],
+  },
+  {
+    name: 'YoutubeMusic',
+    logo: '/icons/youtubeMusic.png',
+    links: [
+      'https://music.youtube.com/playlist?list=PL7Q0IDeVJ8kS3HoGBiajTRNV5deo8wMHA&si=fVz_WhTuRlOjt0fJ',
+    ],
+  },
+  {
+    name: 'Youtube',
+    logo: '/icons/youtube.png',
+    links: [
+      'https://youtube.com/playlist?list=PL7Q0IDeVJ8kS3HoGBiajTRNV5deo8wMHA&feature=shared',
+    ],
+  },
+];
