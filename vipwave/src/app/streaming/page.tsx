@@ -2,7 +2,7 @@
 
 import Modal from '@/lib/components/modal/modal';
 import { getDeviceType } from '@/lib/detectDevice';
-import { streamingLinks } from '@/lib/streamingLinks';
+import { globalStreamingLinks, streamingLinks } from '@/lib/streamingLinks';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
@@ -14,6 +14,7 @@ interface streamingLink {
   ipadLinks?: string[];
   windowLinks?: string[];
   macLinks?: string[];
+  links?: string[];
 }
 
 export default function StreamingPage() {
@@ -21,6 +22,7 @@ export default function StreamingPage() {
     name: string;
     logo: string;
     links: string[];
+    showDeviceType: boolean;
   } | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deviceType, setDeviceType] = useState<string>('');
@@ -42,22 +44,33 @@ export default function StreamingPage() {
     };
   }, [isModalOpen]);
 
-  const openModal = (site: streamingLink) => {
+  const openModal = (site: streamingLink, showDeviceType: boolean) => {
     let links: string[] = [];
 
-    if (deviceType === 'Android') {
-      links = site.androidLinks || [];
-    } else if (deviceType === 'iOS') {
-      links = site.iphoneLinks || [];
-    } else if (deviceType === 'iPad') {
-      links = site.ipadLinks || [];
-    } else if (deviceType === 'Windows') {
-      links = site.windowLinks || [];
-    } else if (deviceType === 'Mac') {
-      links = site.macLinks || [];
+    if (showDeviceType) {
+      if (deviceType === 'Android') {
+        links = site.androidLinks || [];
+      } else if (deviceType === 'iOS') {
+        links = site.iphoneLinks || [];
+      } else if (deviceType === 'iPad') {
+        links = site.ipadLinks || [];
+      } else if (deviceType === 'Windows') {
+        links = site.windowLinks || [];
+      } else if (deviceType === 'Mac') {
+        links = site.macLinks || [];
+      }
+    } else {
+      links = site.links || [];
+      console.log(site.links);
     }
 
-    setSelectedSite({ name: site.name, logo: site.logo, links });
+    setSelectedSite({
+      name: site.name,
+      logo: site.logo,
+      links,
+      showDeviceType,
+    });
+    console.log(selectedSite);
     setIsModalOpen(true);
   };
 
@@ -76,14 +89,37 @@ export default function StreamingPage() {
       <p className="text-sm break-keep">☑️ 중복곡 허용</p>
       <p className="text-sm break-keep">{`☑️ 설정 > "재생목록 맨끝에 추가" 변경`}</p>
       <p className="mb-4 text-sm break-keep">☑️ 음원 다운로드 파일 삭제</p>
-      <div className="flex justify-start flex-wrap w-full onclick-link-gap">
+      <div className="grid grid-cols-2 gap-5 w-full mb-8">
         {streamingLinks.map((site) => (
           <div
             key={site.name}
-            className="flex px-4 items-center gap-4 bg-chart text-white text-[16px] w-[calc(50%-1.6vw)] h-[60px]"
-            onClick={() => openModal(site)}
+            className="flex px-4 py-3 items-center gap-4 bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
+            onClick={() => openModal(site, true)}
           >
             <Image
+              className="rounded-lg"
+              src={site.logo}
+              alt={`${site.name} logo`}
+              width={30}
+              height={30}
+              priority
+              unoptimized // 화질 issue..
+            />
+            {site.name}
+          </div>
+        ))}
+      </div>
+
+      <p className="font-bold text-sm mb-4 mt-8">해외 차트 스트리밍</p>
+      <div className="grid grid-cols-2 gap-5 w-full mb-8">
+        {globalStreamingLinks.map((site) => (
+          <div
+            key={site.name}
+            className="flex px-4 py-3 items-center gap-4 bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
+            onClick={() => openModal(site, false)}
+          >
+            <Image
+              className="rounded-lg"
               src={site.logo}
               alt={`${site.name} logo`}
               width={30}
@@ -95,7 +131,8 @@ export default function StreamingPage() {
           </div>
         ))}
       </div>
-      <p className="font-bold mt-8 text-sm">스트리밍 리스트</p>
+      <hr className="my-8" />
+      <p className="font-bold text-sm">스트리밍 리스트</p>
       <p className="my-4 text-sm break-keep">
         원클릭 링크가 정상 작동 되지 않는 분들은 총공팀에 문의 후 아래 가이드에
         맞게 설정 후 재생목록을 생성해주세요.
@@ -103,16 +140,14 @@ export default function StreamingPage() {
       <div className="flex flex-col justify-center items-center">
         <div className="relative w-[550px] max-w-full">
           {!imageLoaded && (
-            <div className="absolute top-0 left-0 w-full h-full bg-gray-300 animate-pulse"></div>
+            <div className="absolute top-0 left-0 w-full h-full bg-gray-300 animate-pulse" />
           )}
           <Image
-            //TODO
             src={'/gdragon_playlist_ver3.jpeg'}
             alt="streamingList"
             width={550}
             height={500}
             priority
-            unoptimized
             className={`transition-opacity duration-500 object-cover ${
               imageLoaded ? 'opacity-100' : 'opacity-0'
             }`}
@@ -120,11 +155,13 @@ export default function StreamingPage() {
           />
         </div>
       </div>
+
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {selectedSite && (
           <div className="flex flex-col gap-[20px]">
             <div className="flex items-center gap-4 text-[16px]">
               <Image
+                className="rounded-lg"
                 src={selectedSite.logo}
                 alt={`${selectedSite.name} logo`}
                 width={30}
@@ -132,7 +169,8 @@ export default function StreamingPage() {
                 priority
                 unoptimized
               />
-              {selectedSite.name} 원클릭 ({deviceType})
+              {selectedSite.name} 원클릭{' '}
+              {selectedSite.showDeviceType && `(${deviceType})`}
             </div>
 
             {selectedSite.links.length > 1 && (
@@ -149,15 +187,17 @@ export default function StreamingPage() {
                     <div
                       key={index}
                       onClick={() => handleButtonClick(link)}
-                      className=" text-center border-solid border-[1.5px] border-white p-3  cursor-pointer"
+                      className=" text-center border-solid border-[1.5px] border-white p-3 cursor-pointer"
                     >
                       {selectedSite.name} {index + 1}
                     </div>
                   ))}
                 </div>
-                <p className="text-zinc-400 text-xs text-center">
-                  전체반복 ON / 랜덤재생 OFF / 중복곡 허용 / 캐싱적용 OFF
-                </p>
+                {selectedSite.showDeviceType && (
+                  <p className="text-zinc-400 text-xs text-center">
+                    전체반복 ON / 랜덤재생 OFF / 중복곡 허용 / 캐싱적용 OFF
+                  </p>
+                )}
               </>
             ) : (
               <div className="text-center text-xs">
