@@ -1,7 +1,7 @@
-import Image from "next/image";
-import bigbangImg from "../../public/3bang_3.jpeg";
-import TodoList from "@/lib/components/todoList/TodoList";
-import NoticeList from "@/lib/components/notice/Notice";
+import Image from 'next/image';
+import bigbangImg from '../../public/bang_1.jpeg';
+import TodoList from '@/lib/components/todoList/TodoList';
+import NoticeList from '@/lib/components/notice/Notice';
 
 export default function Home() {
   return (
@@ -12,6 +12,7 @@ export default function Home() {
           alt="BIGBANG concert stage"
           fill
           className="object-cover"
+          priority
         />
       </div>
 
