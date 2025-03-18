@@ -8,15 +8,28 @@ export default function SupportPage() {
     <div>
       <p className="font-bold my-6 px-5 text-sm">아이디 기부</p>
       <div className="p-5 py-6 bg-chart overflow-hidden text-zinc-200 leading-6">
-        <p className="mb-2">기부받은 아이디는 다음과 같이 사용됩니다. </p>
-        - 총공이 효과가 있으려면 단 시간에 집중이 되어야 합니다. <br />
-        - 이를 위해 헬퍼를 모집하고 아이디를 배분하여 총공을 진행합니다. <br />
-        - 많은 아이디는 많은 화력이 될 수 있습니다. <br />
+        <p className="mb-2">
+          {' '}
+          사용하지 않는{' '}
+          <span className="color-primary font-bold">
+            벅스/지니 아이디를 기부
+          </span>
+          받습니다.
+        </p>
+        빅뱅 음원총공팀은 더욱 효율적인 총공을 위해 기부받은 아이디로 다운로드
+        및 총공을 진행합니다. <br />
+        아이디가 많을수록 음원 차트 방어에 큰 도움이 됩니다. <br />
+        더 자세한 내용은 아이디 기부 폼 내에 가이드가 첨부되어 있으니 참고
+        부탁드립니다. <br />
+        <p className="mt-2 text-zinc-400">
+          * 벅스: 명의당 최대 3개 <br /> ** 지니: 30일에 명의당 최대 3개
+        </p>
       </div>
       <div className="flex flex-row justify-between gap-5 py-6 px-5">
-        <div
+        <Link
           className="flex w-full gap-4 px-4 py-3 items-center bg-chart text-white text-[16px] min-h-[60px]"
-          onClick={() => {}}
+          href={'https://naver.me/FK5UPdR7'}
+          target="_blank"
         >
           <Image
             className="rounded-lg"
@@ -28,10 +41,11 @@ export default function SupportPage() {
             unoptimized
           />
           벅스 아이디 기부
-        </div>
-        <div
+        </Link>
+        <Link
           className="flex w-full gap-4 px-4 py-3 items-center bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
-          onClick={() => {}}
+          href={'https://naver.me/5ISL2v5E'}
+          target="_blank"
         >
           <Image
             className="rounded-lg"
@@ -43,7 +57,7 @@ export default function SupportPage() {
             unoptimized
           />
           지니 아이디 기부
-        </div>
+        </Link>
       </div>
       <p className="font-bold my-5 px-5 text-sm">서포트 안내</p>
       <div className="p-5 py-6 bg-chart overflow-hidden text-zinc-200 leading-6">
@@ -66,7 +80,7 @@ export default function SupportPage() {
           카카오뱅크 3333-02-2695844 ㅂㅈㅎ
         </p>
         <p className="text-zinc-400">
-          ** 2만원 이상 모금해 주신 분들을 대상으로 활동 종료 후 정산 내역을
+          * 2만원 이상 모금해 주신 분들을 대상으로 활동 종료 후 정산 내역을
           공유드립니다.
         </p>
       </div>
@@ -77,7 +91,6 @@ export default function SupportPage() {
             href={'https://naver.me/G65mvn7j'}
             target="_blank"
             className="flex w-full gap-4 px-4 py-3 items-center bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
-            onClick={() => {}}
           >
             <Image
               className="rounded-lg"
