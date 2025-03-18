@@ -1,9 +1,20 @@
 'use client';
 
+import { Copy } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function SupportPage() {
+  const [showToast, setShowToast] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText('카카오뱅크 3333-02-2695844').then(() => {
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000);
+    });
+  };
+
   return (
     <div>
       <p className="font-bold my-6 px-5 text-sm">아이디 기부</p>
@@ -75,10 +86,12 @@ export default function SupportPage() {
         활동 서포트에 사용됩니다.
         <br />
         많은 관심 부탁드립니다! <br />
-        {/* TODO: 계좌 클립보드 넣기 */}
-        <p className="my-2 color-primary font-bold">
-          카카오뱅크 3333-02-2695844 ㅂㅈㅎ
-        </p>
+        <div className="flex gap-1 my-2 cursor-pointer" onClick={handleCopy}>
+          <Copy width={20} />
+          <span className="color-primary font-bold underline underline-offset-[3px]">
+            카카오뱅크 3333-02-2695844 ㅂㅈㅎ
+          </span>
+        </div>
         <p className="text-zinc-400">
           * 2만원 이상 모금해 주신 분들을 대상으로 활동 종료 후 정산 내역을
           공유드립니다.
@@ -105,6 +118,11 @@ export default function SupportPage() {
           </Link>
         </div>
       </div>
+      {showToast && (
+        <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-black text-white px-4 py-2 animate-fadeInOut">
+          계좌번호가 복사되었습니다.
+        </div>
+      )}
     </div>
   );
 }
