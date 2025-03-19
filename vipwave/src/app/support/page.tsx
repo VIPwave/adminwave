@@ -17,7 +17,7 @@ export default function SupportPage() {
 
   return (
     <div>
-      <p className="font-bold my-6 px-5 text-sm">아이디 기부</p>
+      <p className="font-bold my-5 px-5 text-sm">아이디 기부</p>
       <div className="p-5 py-6 bg-chart overflow-hidden text-zinc-200 leading-6">
         <p className="mb-2">
           {' '}
@@ -108,7 +108,7 @@ export default function SupportPage() {
             <Image
               className="rounded-lg"
               src={'/icons/icon.ico'}
-              alt={`genie logo`}
+              alt={`vipwave logo`}
               width={30}
               height={30}
               priority
