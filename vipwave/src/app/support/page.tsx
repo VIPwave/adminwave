@@ -1,8 +1,7 @@
 'use client';
 
+import BlockBtn from '@/components/Button/BlockBtn';
 import { Copy } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useState } from 'react';
 
 export default function SupportPage() {
@@ -36,39 +35,17 @@ export default function SupportPage() {
           * 벅스: 명의당 최대 3개 <br /> ** 지니: 30일에 명의당 최대 3개
         </p>
       </div>
-      <div className="flex flex-row justify-between gap-5 py-6 px-5">
-        <Link
-          className="flex w-full gap-4 px-4 py-3 items-center bg-chart text-white text-[16px] min-h-[60px]"
-          href={'https://naver.me/FK5UPdR7'}
-          target="_blank"
-        >
-          <Image
-            className="rounded-lg"
-            src={'/icons/bugs.png'}
-            alt={`bugs logo`}
-            width={30}
-            height={30}
-            priority
-            unoptimized
-          />
-          벅스 아이디 기부
-        </Link>
-        <Link
-          className="flex w-full gap-4 px-4 py-3 items-center bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
-          href={'https://naver.me/5ISL2v5E'}
-          target="_blank"
-        >
-          <Image
-            className="rounded-lg"
-            src={'/icons/genie.png'}
-            alt={`genie logo`}
-            width={30}
-            height={30}
-            priority
-            unoptimized
-          />
-          지니 아이디 기부
-        </Link>
+      <div className="grid grid-cols-2 gap-5 w-full py-6 px-5">
+        <BlockBtn
+          text="벅스 아이디 기부"
+          iconSrc="/icons/bugs.png"
+          href="https://naver.me/FK5UPdR7"
+        />
+        <BlockBtn
+          text="지니 아이디 기부"
+          iconSrc="/icons/genie.png"
+          href="https://naver.me/5ISL2v5E"
+        />
       </div>
       <p className="font-bold my-5 px-5 text-sm">서포트 안내</p>
       <div className="p-5 py-6 bg-chart overflow-hidden text-zinc-200 leading-6">
@@ -99,23 +76,12 @@ export default function SupportPage() {
       </div>
 
       <div className="px-5 text-zinc-400">
-        <div className="flex flex-row justify-between gap-5 py-6">
-          <Link
-            href={'https://naver.me/G65mvn7j'}
-            target="_blank"
-            className="flex w-full gap-4 px-4 py-3 items-center bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
-          >
-            <Image
-              className="rounded-lg"
-              src={'/icons/icon.ico'}
-              alt={`genie logo`}
-              width={30}
-              height={30}
-              priority
-              unoptimized
-            />
-            모금 폼 작성
-          </Link>
+        <div className="flex flex-row gap-5 py-6">
+          <BlockBtn
+            text="모금 폼 작성"
+            iconSrc="/icons/icon.ico"
+            href="https://naver.me/G65mvn7j"
+          />
         </div>
       </div>
       {showToast && (

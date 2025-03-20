@@ -1,5 +1,6 @@
 'use client';
 
+import BlockBtn from '@/components/Button/BlockBtn';
 import Modal from '@/lib/components/modal/modal';
 import { getDeviceType } from '@/lib/detectDevice';
 import { globalStreamingLinks, streamingLinks } from '@/lib/streamingLinks';
@@ -91,44 +92,24 @@ export default function StreamingPage() {
       <p className="mb-4 text-sm break-keep">☑️ 음원 다운로드 파일 삭제</p>
       <div className="grid grid-cols-2 gap-5 w-full mb-8">
         {streamingLinks.map((site) => (
-          <div
+          <BlockBtn
             key={site.name}
-            className="flex px-4 py-3 items-center gap-4 bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
+            text={site.name}
+            iconSrc={site.logo}
             onClick={() => openModal(site, true)}
-          >
-            <Image
-              className="rounded-lg"
-              src={site.logo}
-              alt={`${site.name} logo`}
-              width={30}
-              height={30}
-              priority
-              unoptimized // 화질 issue..
-            />
-            {site.name}
-          </div>
+          />
         ))}
       </div>
 
       <p className="font-bold text-sm mb-4 mt-8">해외 차트 스트리밍</p>
       <div className="grid grid-cols-2 gap-5 w-full mb-8">
         {globalStreamingLinks.map((site) => (
-          <div
+          <BlockBtn
             key={site.name}
-            className="flex px-4 py-3 items-center gap-4 bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
+            text={site.name}
+            iconSrc={site.logo}
             onClick={() => openModal(site, false)}
-          >
-            <Image
-              className="rounded-lg"
-              src={site.logo}
-              alt={`${site.name} logo`}
-              width={30}
-              height={30}
-              priority
-              unoptimized
-            />
-            {site.name}
-          </div>
+          />
         ))}
       </div>
       <hr className="my-8" />
