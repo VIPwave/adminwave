@@ -75,14 +75,12 @@ export default function SupportPage() {
         </p>
       </div>
 
-      <div className="px-5 text-zinc-400">
-        <div className="flex flex-row gap-5 py-6">
-          <BlockBtn
-            text="모금 폼 작성"
-            iconSrc="/icons/icon.ico"
-            href="https://naver.me/G65mvn7j"
-          />
-        </div>
+      <div className="grid grid-cols-1 w-full gap-5 py-6 px-5">
+        <BlockBtn
+          text="모금 폼 작성"
+          iconSrc="/icons/icon.ico"
+          href="https://naver.me/G65mvn7j"
+        />
       </div>
       {showToast && (
         <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-black text-white px-4 py-2 animate-fadeInOut">
