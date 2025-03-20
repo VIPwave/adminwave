@@ -89,25 +89,30 @@ export default function StreamingPage() {
       <p className="text-sm break-keep">☑️ 중복곡 허용</p>
       <p className="text-sm break-keep">{`☑️ 설정 > "재생목록 맨끝에 추가" 변경`}</p>
       <p className="mb-4 text-sm break-keep">☑️ 음원 다운로드 파일 삭제</p>
-      <div className="grid grid-cols-2 gap-5 w-full mb-8">
-        {streamingLinks.map((site) => (
-          <div
-            key={site.name}
-            className="flex px-4 py-3 items-center gap-4 bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
-            onClick={() => openModal(site, true)}
-          >
-            <Image
-              className="rounded-lg"
-              src={site.logo}
-              alt={`${site.name} logo`}
-              width={30}
-              height={30}
-              priority
-              unoptimized // 화질 issue..
-            />
-            {site.name}
-          </div>
-        ))}
+      <div className="flex flex-col gap-3 mb-8">
+        <div className="grid grid-cols-2 gap-5 w-full">
+          {streamingLinks.map((site) => (
+            <div
+              key={site.name}
+              className="flex px-4 py-3 items-center gap-4 bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
+              onClick={() => openModal(site, true)}
+            >
+              <Image
+                className="rounded-lg"
+                src={site.logo}
+                alt={`${site.name} logo`}
+                width={30}
+                height={30}
+                priority
+                unoptimized // 화질 issue..
+              />
+              {site.name}
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-end text-xs text-zinc-400">
+          최종 수정: 2025.03.20
+        </div>
       </div>
 
       <p className="font-bold text-sm mb-4 mt-8">해외 차트 스트리밍</p>
