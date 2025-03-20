@@ -1,6 +1,6 @@
 'use client';
 
-import BlockBtn from '@/components/Button/BlockBtn';
+import LinkBlockBtn from '@/components/Button/LinkBlockBtn';
 import { Copy } from 'lucide-react';
 import { useState } from 'react';
 
@@ -36,15 +36,17 @@ export default function SupportPage() {
         </p>
       </div>
       <div className="grid grid-cols-2 gap-5 w-full py-6 px-5">
-        <BlockBtn
+        <LinkBlockBtn
           text="벅스 아이디 기부"
           iconSrc="/icons/bugs.png"
           href="https://naver.me/FK5UPdR7"
+          target="_blank"
         />
-        <BlockBtn
+        <LinkBlockBtn
           text="지니 아이디 기부"
           iconSrc="/icons/genie.png"
           href="https://naver.me/5ISL2v5E"
+          target="_blank"
         />
       </div>
       <p className="font-bold my-5 px-5 text-sm">서포트 안내</p>
@@ -76,10 +78,11 @@ export default function SupportPage() {
       </div>
 
       <div className="grid grid-cols-1 w-full gap-5 py-6 px-5">
-        <BlockBtn
+        <LinkBlockBtn
           text="모금 폼 작성"
           iconSrc="/icons/icon.ico"
           href="https://naver.me/G65mvn7j"
+          target="_blank"
         />
       </div>
       {showToast && (

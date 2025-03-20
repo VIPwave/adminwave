@@ -1,19 +1,28 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
-interface BlockBtnProps {
+interface LinkBlockBtnProps {
   text: string;
   iconSrc?: string;
-  onClick: () => void;
+  href: string;
+  target?: string;
   className?: string;
 }
 
-const BlockBtn = ({ text, iconSrc, onClick, className }: BlockBtnProps) => {
+const LinkBlockBtn = ({
+  text,
+  iconSrc,
+  href,
+  target = '_self',
+  className,
+}: LinkBlockBtnProps) => {
   return (
-    <div
+    <Link
+      href={href}
+      target={target}
       className={`flex px-4 py-3 items-center gap-4 bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight ${className}`}
-      onClick={onClick}
     >
       {iconSrc && (
         <Image
@@ -27,8 +36,8 @@ const BlockBtn = ({ text, iconSrc, onClick, className }: BlockBtnProps) => {
         />
       )}
       <span>{text}</span>
-    </div>
+    </Link>
   );
 };
 
-export default BlockBtn;
+export default LinkBlockBtn;
