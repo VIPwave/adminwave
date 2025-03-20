@@ -22,7 +22,7 @@ const columns: ColumnDef<Song>[] = [
           alt="album_image"
           width={56}
           height={56}
-          //unoptimized // http테스트 당시 이슈발견하여 적용 (배포 후 괜찮으면 속성 제거)
+          unoptimized
         />
       );
     },
