@@ -1,19 +1,14 @@
 import { useState } from 'react';
 
 export function useSelectedPlatform() {
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string>('멜론');
 
   const selectPlatform = (platform: string) => {
     setSelected(platform);
   };
 
-  const resetPlatform = () => {
-    setSelected(null);
-  };
-
   return {
     selectedPlatform: selected,
     selectPlatform,
-    resetPlatform,
   };
 }

@@ -26,7 +26,7 @@ const BlockBtn = ({ text, iconSrc, onClick, className }: BlockBtnProps) => {
           unoptimized
         />
       )}
-      <span>{text}</span>
+      {text}
     </div>
   );
 };
