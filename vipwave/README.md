@@ -34,3 +34,19 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Style guide
+
+1. padding, margin
+   레이아웃 영역은 header를 따릅니다. (mx-5) <br/>
+   이 외에 기본적으로 2 사용 / 큰 섹션 나눌때는 5 사용 (p-2, p-5)
+
+2. border
+   border는 1px, solid만 사용하며 <br/>
+   큰 섹션에는 primary, 작은 섹션에는 secondary컬러를 사용하시면 됩니다. (config 참고)
+
+3. background <br/>
+   primary는 노란색, chart는 회색, 가장 배경은 black입니다.
+
+4. typography <br/>
+   normal - "text-sm text-white" <br/> small - "text-xs text-secondary" <br/> highlight - "text-sm text-primary"

@@ -14,7 +14,17 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        primary: "#ffc600",
+        primary: "#fff000",
+        chart: "#252525",
+      },
+      borderColor: {
+        primary: "#6b7280",
+        secondary: "#374151",
+      },
+      textColor: {
+        primary: "#fff000",
+        white: "#fff",
+        secondary: "#a1a1aa",
       },
       borderRadius: {
         lg: "var(--radius)",
