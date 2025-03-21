@@ -1,4 +1,5 @@
 import { Guide, TAB, FILTERS } from '@/lib/guideData';
+import SelectBtn from '../Button/SelectBtn';
 
 interface GuideSelectorProps {
   selectedTab: TAB;
@@ -15,17 +16,16 @@ export default function GuideSelector({
     <div className="flex flex-wrap gap-2 mb-4">
       {FILTERS[selectedTab].length > 1 &&
         FILTERS[selectedTab].map((guide, index) => (
-          <button
+          <SelectBtn
             key={index}
             onClick={() => changeGuide(guide)}
-            className={`px-4 py-2 ${
+            className={`${
               guide.name === currentGuide.name
                 ? 'bg-white text-black'
                 : 'bg-chart text-white'
             }`}
-          >
-            {guide.name}
-          </button>
+            text={guide.name}
+          />
         ))}
     </div>
   );
