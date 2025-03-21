@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
-import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
-import { useRouter } from "next/navigation";
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import { Button } from '@/components/ui/button';
+import { ChevronRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
-dayjs.locale("ko");
+dayjs.locale('ko');
 
 export default function NoticeList(props: { title: string }) {
-  const now = dayjs().tz("Asia/Seoul");
+  const now = dayjs().tz('Asia/Seoul');
 
-  const today = now.format("YYYY년 MM월 DD일");
+  const today = now.format('YYYY년 MM월 DD일');
 
   return (
     <>
@@ -25,10 +25,17 @@ export default function NoticeList(props: { title: string }) {
 
       <div>
         <Notice
+          title="DAESUNG D's WAVE 공동구매 진행 (기프티팬)"
+          url="https://giftifan.page.link/sfSH"
+        />
+        <Notice
+          title="DAESUNG D's WAVE 공동구매 진행 (케타포)"
+          url="https://kr.ktown4u.com/eventsub?eve_no=43181027&biz_no=967"
+        />
+        <Notice
           title="해외 차트 총공 안내 #GD_Billboard_Global_200"
           url="https://www.instagram.com/p/DGo0KYchQKO/"
         />
-        <Notice title="[신규] 음악방송 투표 가이드 추가 안내" url="/guide" />
         <Notice
           title="G-DRAGON - TOO BAD (Official Video)"
           url="https://youtu.be/o9DhvbqYzns?si=F1L0UQtbWL-vIRxH"
@@ -59,7 +66,7 @@ function Notice(props: { title: string; url: string; isExtra?: boolean }) {
 
   const handleClick = () => {
     if (isExtra) {
-      window.open(url, "_blank", "noopener,noreferrer");
+      window.open(url, '_blank', 'noopener,noreferrer');
     } else {
       router.push(url);
     }
