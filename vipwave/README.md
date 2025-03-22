@@ -46,7 +46,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
    큰 섹션에는 primary, 작은 섹션에는 secondary컬러를 사용하시면 됩니다. (config 참고)
 
 3. background <br/>
-   primary는 노란색, chart는 회색, 가장 배경은 black입니다.
+   primary는 노란색, chart는 회색, 기본 배경은 black입니다.
 
 4. typography <br/>
    normal - "text-sm text-white" <br/> small - "text-xs text-secondary" <br/> highlight - "text-sm text-primary"

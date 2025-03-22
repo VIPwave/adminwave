@@ -44,10 +44,6 @@
   animation: customPulse 6s ease-in-out infinite;
 }
 
-/* TODO: 공통 css tailwind.config.ts에 등록*/
-.bg-chart {
-  background-color: #252525;
-}
 body {
   font-family: Arial, Helvetica, sans-serif;
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { navItems } from "@/lib/navItems";
 import { slideMenuItems } from "@/lib/slideMenuPaths";
 import { usePathname } from "next/navigation";
-import IconButton from "@/components/ui/Icon";
+import IconButton from "@/components/ui/IconButton";
 
 const SlideMenu = () => {
   const [isOpen, setIsOpen] = useState(false);

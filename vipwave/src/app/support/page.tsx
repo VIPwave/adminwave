@@ -1,6 +1,6 @@
 "use client";
 
-import IconButton from "@/components/ui/Icon";
+import IconButton from "@/components/ui/IconButton";
 import { Copy } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
