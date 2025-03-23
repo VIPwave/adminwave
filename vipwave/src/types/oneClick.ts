@@ -1,4 +1,4 @@
-export type DeviceType = 'ANDROID' | 'IOS' | 'WINDOWS' | 'MAC';
+export type DeviceType = 'ANDROID' | 'IPHONE' | 'IPAD' | 'WINDOWS' | 'MAC';
 
 export interface LinkGroup {
   device_type: DeviceType;
@@ -6,7 +6,7 @@ export interface LinkGroup {
 }
 
 export interface PlatformData {
-  name: string;
+  platform: string;
   logo: string;
   chart_type: 'DOMESTIC' | 'GLOBAL';
   links: LinkGroup[];

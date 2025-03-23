@@ -3,25 +3,15 @@
 import { fetchOneClickLinks } from '@/apis/fetchOneClick';
 import SelectBtn from '@/components/Button/SelectBtn';
 import { useSelectedPlatform } from '@/hooks/useSelectedPlatform';
-import { PLATFORM } from '@/lib/musicPlatformData';
-import { PlatformData } from '@/types/oneClick';
+import { PLATFORM_MAP, PLATFORM_REVERSE_MAP } from '@/lib/musicPlatformData';
+import { DeviceType, PlatformData } from '@/types/oneClick';
 import { useEffect, useState } from 'react';
 
 const AdminStreamingPage = () => {
   const { selectedPlatform, selectPlatform } = useSelectedPlatform();
-  const [oneClickForm, setOneClickForm] = useState<PlatformData>({
-    name: selectedPlatform,
-    logo: '',
-    chart_type: 'DOMESTIC',
-    links: [
-      { device_type: 'ANDROID', links: [''] },
-      { device_type: 'IOS', links: [''] },
-      { device_type: 'MAC', links: [''] },
-      { device_type: 'WINDOWS', links: [''] },
-    ],
-    staff_no: '',
-    update_at: '',
-  });
+  const [oneClickForm, setOneClickForm] = useState<
+    Record<string, PlatformData>
+  >({});
 
   const staffOptions = [
     '총대',
@@ -44,15 +34,14 @@ const AdminStreamingPage = () => {
     const getData = async () => {
       try {
         const data = await fetchOneClickLinks();
-        const fetchedData = data!.data[0];
-        setOneClickForm({
-          name: fetchedData.name,
-          logo: fetchedData.logo,
-          chart_type: fetchedData.chart_type,
-          links: fetchedData.links,
-          staff_no: fetchedData.staff_no,
-          update_at: fetchedData.update_at,
-        });
+        const entries = (data?.data || []).reduce<Record<string, PlatformData>>(
+          (acc, item) => {
+            acc[item.platform] = item;
+            return acc;
+          },
+          {}
+        );
+        setOneClickForm(entries);
       } catch (err) {
         console.error('데이터 불러오기 실패:', err);
       }
@@ -61,13 +50,43 @@ const AdminStreamingPage = () => {
     getData();
   }, []);
 
+  const renderOneCLickLinkByDevice = (deviceType: DeviceType) => {
+    const platformKey =
+      PLATFORM_REVERSE_MAP[selectedPlatform] || selectedPlatform;
+
+    const device = oneClickForm[platformKey]?.links.find(
+      (d) => d.device_type === deviceType
+    );
+    return device?.links.map((link, index) => (
+      <div
+        key={index}
+        className="grid grid-cols-[1fr_auto_1fr] items-center gap-4"
+      >
+        <input
+          type="text"
+          placeholder={`${link}`}
+          className="px-4 py-2 w-full bg-chart text-white"
+          disabled
+        />
+        <div className="text-center text-white">→</div>
+        <input
+          type="text"
+          placeholder={`${selectedPlatform} 링크`}
+          className="px-4 py-2 w-full bg-chart text-white outline-none"
+        />
+      </div>
+    ));
+  };
+
   return (
     <div className="flex flex-col gap-4 px-5 py-6">
-      <div className="flex gap-4 flex-wrap">
-        {PLATFORM.map((platform) => (
+      <div className="flex flex-wrap gap-4">
+        {Object.keys(PLATFORM_MAP).map((platform) => (
           <SelectBtn
             key={platform}
-            text={platform}
+            text={
+              PLATFORM_MAP[platform as keyof typeof PLATFORM_MAP] || platform
+            }
             onClick={() => selectPlatform(platform)}
             className={`${
               selectedPlatform === platform
@@ -79,152 +98,27 @@ const AdminStreamingPage = () => {
       </div>
       <p className="text-white text-lg">{selectedPlatform}</p>
       <p>Android</p>
-      <div className="grid grid-cols-2 gap-4">
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white"
-          disabled
-        />
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white outline-none"
-        />
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white"
-          disabled
-        />
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white outline-none"
-        />
-      </div>
+      {renderOneCLickLinkByDevice('ANDROID')}
       <div className="flex justify-end">
         <button className="bg-chart px-4 py-1">추가</button>
       </div>
       <p>iOS</p>
-      <div className="grid grid-cols-2 gap-4">
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white"
-          disabled
-        />
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white outline-none"
-        />
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white"
-          disabled
-        />
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white outline-none"
-        />
-      </div>
+      {renderOneCLickLinkByDevice('IPHONE')}
       <div className="flex justify-end">
         <button className="bg-chart px-4 py-1">추가</button>
       </div>
       <p>iPAD</p>
-      <div className="grid grid-cols-2 gap-4">
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white"
-          disabled
-        />
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white outline-none"
-        />
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white"
-          disabled
-        />
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white outline-none"
-        />
-      </div>
+      {renderOneCLickLinkByDevice('IPAD')}
       <div className="flex justify-end">
         <button className="bg-chart px-4 py-1">추가</button>
       </div>
       <p>Windows</p>
-      <div className="grid grid-cols-2 gap-4">
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white"
-          disabled
-        />
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white outline-none"
-        />
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white"
-          disabled
-        />
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white outline-none"
-        />
-      </div>
+      {renderOneCLickLinkByDevice('WINDOWS')}
       <div className="flex justify-end">
         <button className="bg-chart px-4 py-1">추가</button>
       </div>
       <p>Mac</p>
-      <div className="grid grid-cols-2 gap-4">
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white"
-          disabled
-        />
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white outline-none"
-        />
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white"
-          disabled
-        />
-        <input
-          type="text"
-          placeholder={`${selectedPlatform} 링크`}
-          className="px-4 py-2 w-full bg-chart text-white outline-none"
-        />
-      </div>
+      {renderOneCLickLinkByDevice('MAC')}
       <div className="flex justify-end">
         <button className="bg-chart px-4 py-1">추가</button>
       </div>
