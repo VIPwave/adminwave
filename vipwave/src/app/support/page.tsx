@@ -1,15 +1,16 @@
-'use client';
+"use client";
 
-import { Copy } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState } from 'react';
+import IconButton from "@/components/ui/IconButton";
+import { Copy } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 
 export default function SupportPage() {
   const [showToast, setShowToast] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText('카카오뱅크 3333-02-2695844').then(() => {
+    navigator.clipboard.writeText("카카오뱅크 3333-02-2695844").then(() => {
       setShowToast(true);
       setTimeout(() => setShowToast(false), 2000);
     });
@@ -18,10 +19,9 @@ export default function SupportPage() {
   return (
     <div>
       <p className="font-bold my-5 px-5 text-sm">아이디 기부</p>
-      <div className="p-5 py-6 bg-chart overflow-hidden text-zinc-200 leading-6">
+      <div className="p-5 bg-chart overflow-hidden text-white leading-6">
         <p className="mb-2">
-          {' '}
-          사용하지 않는{' '}
+          사용하지 않는
           <span className="color-primary font-bold">
             벅스/지니 아이디를 기부
           </span>
@@ -32,19 +32,19 @@ export default function SupportPage() {
         아이디가 많을수록 음원 차트 방어에 큰 도움이 됩니다. <br />
         더 자세한 내용은 아이디 기부 폼 내에 가이드가 첨부되어 있으니 참고
         부탁드립니다. <br />
-        <p className="mt-2 text-zinc-400">
+        <p className="mt-2 text-secondary">
           * 벅스: 명의당 최대 3개 <br /> ** 지니: 30일에 명의당 최대 3개
         </p>
       </div>
-      <div className="flex flex-row justify-between gap-5 py-6 px-5">
+      <div className="flex flex-row justify-between gap-5 py-5 px-5">
         <Link
           className="flex w-full gap-4 px-4 py-3 items-center bg-chart text-white text-[16px] min-h-[60px]"
-          href={'https://naver.me/FK5UPdR7'}
+          href={"https://naver.me/FK5UPdR7"}
           target="_blank"
         >
           <Image
             className="rounded-lg"
-            src={'/icons/bugs.png'}
+            src={"/icons/bugs.png"}
             alt={`bugs logo`}
             width={30}
             height={30}
@@ -55,12 +55,12 @@ export default function SupportPage() {
         </Link>
         <Link
           className="flex w-full gap-4 px-4 py-3 items-center bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
-          href={'https://naver.me/5ISL2v5E'}
+          href={"https://naver.me/5ISL2v5E"}
           target="_blank"
         >
           <Image
             className="rounded-lg"
-            src={'/icons/genie.png'}
+            src={"/icons/genie.png"}
             alt={`genie logo`}
             width={30}
             height={30}
@@ -70,11 +70,11 @@ export default function SupportPage() {
           지니 아이디 기부
         </Link>
       </div>
-      <p className="font-bold my-5 px-5 text-sm">서포트 안내</p>
-      <div className="p-5 py-6 bg-chart overflow-hidden text-zinc-200 leading-6">
+      <p className="font-bold mb-5 px-5 text-sm">서포트 안내</p>
+      <div className="p-5 py-5 bg-chart overflow-hidden">
         <p className="mb-2">
-          <span className="color-primary font-bold">VIPWAVE</span>는{' '}
-          <span className="color-primary font-bold">
+          <span className="text-primary font-bold">VIPWAVE</span>는
+          <span className="text-primary font-bold">
             빅뱅 음원총공팀 자체제작 사이트
           </span>
           입니다.
@@ -87,27 +87,32 @@ export default function SupportPage() {
         <br />
         많은 관심 부탁드립니다! <br />
         <div className="flex gap-1 my-2 cursor-pointer" onClick={handleCopy}>
-          <Copy width={20} />
+          <IconButton
+            className="w-[14px] h-[14px] p-0 pt-[4px]"
+            onClick={handleCopy}
+          >
+            <Copy style={{ width: "12px", height: "12px" }} />
+          </IconButton>
           <span className="color-primary font-bold underline underline-offset-[3px]">
             카카오뱅크 3333-02-2695844 ㅂㅈㅎ
           </span>
         </div>
-        <p className="text-zinc-400">
+        <p className="text-secondary">
           * 2만원 이상 모금해 주신 분들을 대상으로 활동 종료 후 정산 내역을
           공유드립니다.
         </p>
       </div>
 
-      <div className="px-5 text-zinc-400">
-        <div className="flex flex-row justify-between gap-5 py-6">
+      <div className="px-5 text-secondary">
+        <div className="flex flex-row justify-between gap-5 py-5">
           <Link
-            href={'https://naver.me/G65mvn7j'}
+            href={"https://naver.me/G65mvn7j"}
             target="_blank"
             className="flex w-full gap-4 px-4 py-3 items-center bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
           >
             <Image
               className="rounded-lg"
-              src={'/icons/icon.ico'}
+              src={"/icons/icon.ico"}
               alt={`vipwave logo`}
               width={30}
               height={30}

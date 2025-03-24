@@ -39,7 +39,7 @@ export default function TaskTable(props: ChartTableProps) {
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
                 key={headerGroup.id}
-                className="font-bold border-gray-500"
+                className="font-bold border-primary"
               >
                 {headerGroup.headers.map((header) => {
                   return (
@@ -63,7 +63,7 @@ export default function TaskTable(props: ChartTableProps) {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} className="h-18 border-gray-700">
+                <TableRow key={row.id} className="h-18 border-secondary">
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}

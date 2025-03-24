@@ -13,8 +13,8 @@ export default function TodoList(props: { title: string }) {
   const today = now.format("YYYY년 MM월 DD일");
 
   return (
-    <>
-      <div className="flex py-2 border-b border-gray-600 px-2">
+    <div>
+      <div className="flex py-2 border-b border-primary">
         <span className="font-bold grow">{props.title}</span>
         <span className="text-gray-500 text-xs flex items-center">{today}</span>
       </div>
@@ -26,7 +26,7 @@ export default function TodoList(props: { title: string }) {
         <Todo index={4} title="선물하기" isLink={false} />
         <Todo index={5} title="지니 음악나누기" isLink={false} />
       </div>
-    </>
+    </div>
   );
 }
 
@@ -34,7 +34,7 @@ function Todo(props: { index: number; title: string; isLink?: boolean }) {
   const { index, title, isLink } = props;
 
   return (
-    <div className="w-full flex justify-between items-center py-2 px-3">
+    <div className="w-full flex justify-between items-center py-2">
       <div className="flex gap-4">
         <span className="text-gray-400">{index}</span>
         <span>{title}</span>
