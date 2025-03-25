@@ -5,10 +5,13 @@ export interface LinkGroup {
   links: string[];
 }
 
+export type PlatformType = 'Melon' | 'Genie' | 'Bugs' | 'Vibe' | 'Flo';
+
+export type ChartType = 'DOMESTIC' | 'GLOBAL';
 export interface PlatformData {
-  platform: string;
+  platform: PlatformType;
   logo: string;
-  chart_type: 'DOMESTIC' | 'GLOBAL';
+  chart_type: ChartType;
   links: LinkGroup[];
   staff_no: string;
   update_at: string;

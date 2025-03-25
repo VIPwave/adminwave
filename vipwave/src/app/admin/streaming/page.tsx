@@ -12,6 +12,9 @@ const AdminStreamingPage = () => {
   const [oneClickForm, setOneClickForm] = useState<
     Record<string, PlatformData>
   >({});
+  const [editedLinks, setEditedLinks] = useState<
+    Record<string, Record<DeviceType, string[]>>
+  >({});
 
   const staffOptions = [
     '총대',
@@ -42,6 +45,16 @@ const AdminStreamingPage = () => {
           {}
         );
         setOneClickForm(entries);
+
+        // 초기 editedLinks 세팅
+        const edited: Record<string, Record<DeviceType, string[]>> = {};
+        Object.entries(entries).forEach(([platform, platformData]) => {
+          edited[platform] = {} as Record<DeviceType, string[]>;
+          platformData.links.forEach((group) => {
+            edited[platform][group.device_type] = group.links.map(() => '');
+          });
+        });
+        setEditedLinks(edited);
       } catch (err) {
         console.error('데이터 불러오기 실패:', err);
       }
@@ -50,33 +63,81 @@ const AdminStreamingPage = () => {
     getData();
   }, []);
 
+  const handleAddLink = (deviceType: DeviceType) => {
+    const platformKey =
+      PLATFORM_REVERSE_MAP[selectedPlatform] || selectedPlatform;
+
+    setEditedLinks((prev) => {
+      const prevLinks = prev[platformKey]?.[deviceType] || [];
+      return {
+        ...prev,
+        [platformKey]: {
+          ...prev[platformKey],
+          [deviceType]: [...prevLinks, ''],
+        },
+      };
+    });
+  };
+
+  const updateOneClickLink = (
+    deviceType: DeviceType,
+    index: number,
+    value: string
+  ) => {
+    const platformKey =
+      PLATFORM_REVERSE_MAP[selectedPlatform] || selectedPlatform;
+
+    setEditedLinks((prev) => {
+      const updated = [...(prev[platformKey]?.[deviceType] || [])];
+      updated[index] = value;
+      return {
+        ...prev,
+        [platformKey]: {
+          ...prev[platformKey],
+          [deviceType]: updated,
+        },
+      };
+    });
+  };
+
   const renderOneCLickLinkByDevice = (deviceType: DeviceType) => {
     const platformKey =
       PLATFORM_REVERSE_MAP[selectedPlatform] || selectedPlatform;
 
-    const device = oneClickForm[platformKey]?.links.find(
+    const originalDevice = oneClickForm[platformKey]?.links.find(
       (d) => d.device_type === deviceType
     );
-    return device?.links.map((link, index) => (
+    const editedDevice = editedLinks[platformKey]?.[deviceType] || [];
+
+    return editedDevice.map((editedLink, index) => (
       <div
         key={index}
         className="grid grid-cols-[1fr_auto_1fr] items-center gap-4"
       >
         <input
           type="text"
-          placeholder={`${link}`}
+          value={originalDevice?.links[index] || ''}
+          placeholder={
+            originalDevice?.links[index] ? '' : '새 링크 입력해주세요'
+          }
           className="px-4 py-2 w-full bg-chart text-white"
           disabled
         />
         <div className="text-center text-white">→</div>
         <input
           type="text"
-          placeholder={`${selectedPlatform} 링크`}
+          value={editedLink}
+          placeholder={`${selectedPlatform} ${deviceType.toLowerCase()} 링크`}
+          onChange={(e) =>
+            updateOneClickLink(deviceType, index, e.target.value)
+          }
           className="px-4 py-2 w-full bg-chart text-white outline-none"
         />
       </div>
     ));
   };
+
+  const devices: DeviceType[] = ['ANDROID', 'IPHONE', 'IPAD', 'WINDOWS', 'MAC'];
 
   return (
     <div className="flex flex-col gap-4 px-5 py-6">
@@ -97,31 +158,21 @@ const AdminStreamingPage = () => {
         ))}
       </div>
       <p className="text-white text-lg">{selectedPlatform}</p>
-      <p>Android</p>
-      {renderOneCLickLinkByDevice('ANDROID')}
-      <div className="flex justify-end">
-        <button className="bg-chart px-4 py-1">추가</button>
-      </div>
-      <p>iOS</p>
-      {renderOneCLickLinkByDevice('IPHONE')}
-      <div className="flex justify-end">
-        <button className="bg-chart px-4 py-1">추가</button>
-      </div>
-      <p>iPAD</p>
-      {renderOneCLickLinkByDevice('IPAD')}
-      <div className="flex justify-end">
-        <button className="bg-chart px-4 py-1">추가</button>
-      </div>
-      <p>Windows</p>
-      {renderOneCLickLinkByDevice('WINDOWS')}
-      <div className="flex justify-end">
-        <button className="bg-chart px-4 py-1">추가</button>
-      </div>
-      <p>Mac</p>
-      {renderOneCLickLinkByDevice('MAC')}
-      <div className="flex justify-end">
-        <button className="bg-chart px-4 py-1">추가</button>
-      </div>
+
+      {devices.map((device) => (
+        <div key={device} className="flex flex-col gap-4">
+          <p>{device}</p>
+          {renderOneCLickLinkByDevice(device)}
+          <div className="flex justify-end">
+            <button
+              className="bg-chart px-4 py-1"
+              onClick={() => handleAddLink(device)}
+            >
+              추가
+            </button>
+          </div>
+        </div>
+      ))}
 
       <div className="flex gap-2 justify-end items-center">
         <div className="relative">
@@ -142,6 +193,7 @@ const AdminStreamingPage = () => {
           className="px-4 py-2 bg-chart text-white outline-none"
         />
       </div>
+
       <div className="flex justify-end">
         <button
           className="bg-chart px-4 py-1"
