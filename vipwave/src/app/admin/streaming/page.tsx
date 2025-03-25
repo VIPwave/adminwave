@@ -1,20 +1,18 @@
 'use client';
 
-import { fetchOneClickLinks } from '@/apis/fetchOneClick';
+import { RenderLinksByDevice } from '@/components/admin/DeviceLInks';
 import SelectBtn from '@/components/Button/SelectBtn';
+import { useOneClickForm } from '@/hooks/admin/useOneClickForm';
 import { useSelectedPlatform } from '@/hooks/useSelectedPlatform';
 import { PLATFORM_MAP, PLATFORM_REVERSE_MAP } from '@/lib/musicPlatformData';
-import { DeviceType, PlatformData } from '@/types/oneClick';
-import { useEffect, useState } from 'react';
+import { DeviceType } from '@/types/oneClick';
 
 const AdminStreamingPage = () => {
+  const devices: DeviceType[] = ['ANDROID', 'IPHONE', 'IPAD', 'WINDOWS', 'MAC'];
   const { selectedPlatform, selectPlatform } = useSelectedPlatform();
-  const [oneClickForm, setOneClickForm] = useState<
-    Record<string, PlatformData>
-  >({});
-  const [editedLinks, setEditedLinks] = useState<
-    Record<string, Record<DeviceType, string[]>>
-  >({});
+  const { oneClickForm, editedLinks, setEditedLinks } = useOneClickForm();
+  const platformKey =
+    PLATFORM_REVERSE_MAP[selectedPlatform] || selectedPlatform;
 
   const staffOptions = [
     '총대',
@@ -33,40 +31,7 @@ const AdminStreamingPage = () => {
     '디자인 스탭3',
   ];
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await fetchOneClickLinks();
-        const entries = (data?.data || []).reduce<Record<string, PlatformData>>(
-          (acc, item) => {
-            acc[item.platform] = item;
-            return acc;
-          },
-          {}
-        );
-        setOneClickForm(entries);
-
-        // 초기 editedLinks 세팅
-        const edited: Record<string, Record<DeviceType, string[]>> = {};
-        Object.entries(entries).forEach(([platform, platformData]) => {
-          edited[platform] = {} as Record<DeviceType, string[]>;
-          platformData.links.forEach((group) => {
-            edited[platform][group.device_type] = group.links.map(() => '');
-          });
-        });
-        setEditedLinks(edited);
-      } catch (err) {
-        console.error('데이터 불러오기 실패:', err);
-      }
-    };
-
-    getData();
-  }, []);
-
   const handleAddLink = (deviceType: DeviceType) => {
-    const platformKey =
-      PLATFORM_REVERSE_MAP[selectedPlatform] || selectedPlatform;
-
     setEditedLinks((prev) => {
       const prevLinks = prev[platformKey]?.[deviceType] || [];
       return {
@@ -84,9 +49,6 @@ const AdminStreamingPage = () => {
     index: number,
     value: string
   ) => {
-    const platformKey =
-      PLATFORM_REVERSE_MAP[selectedPlatform] || selectedPlatform;
-
     setEditedLinks((prev) => {
       const updated = [...(prev[platformKey]?.[deviceType] || [])];
       updated[index] = value;
@@ -99,45 +61,6 @@ const AdminStreamingPage = () => {
       };
     });
   };
-
-  const renderOneCLickLinkByDevice = (deviceType: DeviceType) => {
-    const platformKey =
-      PLATFORM_REVERSE_MAP[selectedPlatform] || selectedPlatform;
-
-    const originalDevice = oneClickForm[platformKey]?.links.find(
-      (d) => d.device_type === deviceType
-    );
-    const editedDevice = editedLinks[platformKey]?.[deviceType] || [];
-
-    return editedDevice.map((editedLink, index) => (
-      <div
-        key={index}
-        className="grid grid-cols-[1fr_auto_1fr] items-center gap-4"
-      >
-        <input
-          type="text"
-          value={originalDevice?.links[index] || ''}
-          placeholder={
-            originalDevice?.links[index] ? '' : '새 링크 입력해주세요'
-          }
-          className="px-4 py-2 w-full bg-chart text-white"
-          disabled
-        />
-        <div className="text-center text-white">→</div>
-        <input
-          type="text"
-          value={editedLink}
-          placeholder={`${selectedPlatform} ${deviceType.toLowerCase()} 링크`}
-          onChange={(e) =>
-            updateOneClickLink(deviceType, index, e.target.value)
-          }
-          className="px-4 py-2 w-full bg-chart text-white outline-none"
-        />
-      </div>
-    ));
-  };
-
-  const devices: DeviceType[] = ['ANDROID', 'IPHONE', 'IPAD', 'WINDOWS', 'MAC'];
 
   return (
     <div className="flex flex-col gap-4 px-5 py-6">
@@ -162,7 +85,13 @@ const AdminStreamingPage = () => {
       {devices.map((device) => (
         <div key={device} className="flex flex-col gap-4">
           <p>{device}</p>
-          {renderOneCLickLinkByDevice(device)}
+          <RenderLinksByDevice
+            deviceType={device}
+            platformKey={platformKey}
+            oneClickForm={oneClickForm}
+            editedLinks={editedLinks}
+            updateOneClickLink={updateOneClickLink}
+          />
           <div className="flex justify-end">
             <button
               className="bg-chart px-4 py-1"
