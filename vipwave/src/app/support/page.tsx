@@ -28,6 +28,7 @@ export default function SupportPage() {
             className="flex w-full gap-4 px-4 py-3 items-center bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
           >
             <Image
+              className="rounded-lg"
               src={"/icons/icon.ico"}
               alt={`vipwave logo`}
               width={30}
@@ -116,7 +117,7 @@ export default function SupportPage() {
         title="서포트 안내"
         button={
           <Link
-            href={"https://naver.me/GL8kPDZ2"}
+            href={"https://naver.me/G65mvn7j"}
             target="_blank"
             className="flex w-full gap-4 px-4 py-3 items-center bg-chart text-white text-[16px] min-h-[60px] whitespace-normal break-words leading-tight"
           >
