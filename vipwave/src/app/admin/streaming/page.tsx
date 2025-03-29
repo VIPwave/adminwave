@@ -2,15 +2,18 @@
 
 import { RenderLinksByDevice } from '@/components/admin/DeviceLInks';
 import SelectBtn from '@/components/Button/SelectBtn';
-import { useOneClickForm } from '@/hooks/admin/useOneClickForm';
+//import { useOneClickForm } from '@/hooks/admin/useOneClickForm';
 import { useSelectedPlatform } from '@/hooks/useSelectedPlatform';
 import { PLATFORM_MAP, PLATFORM_REVERSE_MAP } from '@/lib/musicPlatformData';
 import { DeviceType } from '@/types/oneClick';
+import { useEffect } from 'react';
+import { useOneClickStore } from '@/store/useOneClickStore';
 
 const AdminStreamingPage = () => {
   const devices: DeviceType[] = ['ANDROID', 'IPHONE', 'IPAD', 'WINDOWS', 'MAC'];
   const { selectedPlatform, selectPlatform } = useSelectedPlatform();
-  const { oneClickForm, editedLinks, setEditedLinks } = useOneClickForm();
+  const { oneClickForm, initialize, addLink } = useOneClickStore();
+
   const platformKey =
     PLATFORM_REVERSE_MAP[selectedPlatform] || selectedPlatform;
 
@@ -31,36 +34,9 @@ const AdminStreamingPage = () => {
     '디자인 스탭3',
   ];
 
-  const handleAddLink = (deviceType: DeviceType) => {
-    setEditedLinks((prev) => {
-      const prevLinks = prev[platformKey]?.[deviceType] || [];
-      return {
-        ...prev,
-        [platformKey]: {
-          ...prev[platformKey],
-          [deviceType]: [...prevLinks, ''],
-        },
-      };
-    });
-  };
-
-  const updateOneClickLink = (
-    deviceType: DeviceType,
-    index: number,
-    value: string
-  ) => {
-    setEditedLinks((prev) => {
-      const updated = [...(prev[platformKey]?.[deviceType] || [])];
-      updated[index] = value;
-      return {
-        ...prev,
-        [platformKey]: {
-          ...prev[platformKey],
-          [deviceType]: updated,
-        },
-      };
-    });
-  };
+  useEffect(() => {
+    initialize();
+  }, [initialize]);
 
   return (
     <div className="flex flex-col gap-4 px-5 py-6">
@@ -85,17 +61,11 @@ const AdminStreamingPage = () => {
       {devices.map((device) => (
         <div key={device} className="flex flex-col gap-4">
           <p>{device}</p>
-          <RenderLinksByDevice
-            deviceType={device}
-            platformKey={platformKey}
-            oneClickForm={oneClickForm}
-            editedLinks={editedLinks}
-            updateOneClickLink={updateOneClickLink}
-          />
+          <RenderLinksByDevice deviceType={device} platformKey={platformKey} />
           <div className="flex justify-end">
             <button
               className="bg-chart px-4 py-1"
-              onClick={() => handleAddLink(device)}
+              onClick={() => addLink(platformKey, device)}
             >
               추가
             </button>
