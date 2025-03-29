@@ -9,6 +9,7 @@ export type PlatformType = 'Melon' | 'Genie' | 'Bugs' | 'Vibe' | 'Flo';
 
 export type ChartType = 'DOMESTIC' | 'GLOBAL';
 export interface PlatformData {
+  id: number;
   platform: PlatformType;
   logo: string;
   chart_type: ChartType;

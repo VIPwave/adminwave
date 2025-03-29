@@ -2,17 +2,17 @@
 
 import { RenderLinksByDevice } from '@/components/admin/DeviceLInks';
 import SelectBtn from '@/components/Button/SelectBtn';
-//import { useOneClickForm } from '@/hooks/admin/useOneClickForm';
 import { useSelectedPlatform } from '@/hooks/useSelectedPlatform';
 import { PLATFORM_MAP, PLATFORM_REVERSE_MAP } from '@/lib/musicPlatformData';
 import { DeviceType } from '@/types/oneClick';
 import { useEffect } from 'react';
 import { useOneClickStore } from '@/store/useOneClickStore';
+import submitOneClickLinks from '@/apis/patchOneClick';
 
 const AdminStreamingPage = () => {
   const devices: DeviceType[] = ['ANDROID', 'IPHONE', 'IPAD', 'WINDOWS', 'MAC'];
   const { selectedPlatform, selectPlatform } = useSelectedPlatform();
-  const { oneClickForm, initialize, addLink } = useOneClickStore();
+  const { initialize, addLink } = useOneClickStore();
 
   const platformKey =
     PLATFORM_REVERSE_MAP[selectedPlatform] || selectedPlatform;
@@ -97,7 +97,7 @@ const AdminStreamingPage = () => {
         <button
           className="bg-chart px-4 py-1"
           onClick={() => {
-            console.log(oneClickForm);
+            submitOneClickLinks(platformKey);
           }}
         >
           등록
