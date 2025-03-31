@@ -90,7 +90,7 @@ const AdminStreamingPage = () => {
         <div>
           <p className="text-zinc-400 text-xs">
             최종 수정:{' '}
-            {new Date(oneClickForm[platformKey].update_at)
+            {new Date(oneClickForm[platformKey]?.update_at)
               .toLocaleDateString('ko-KR', {
                 year: '2-digit',
                 month: '2-digit',
@@ -98,7 +98,7 @@ const AdminStreamingPage = () => {
               })
               .replaceAll(' ', '')
               .replaceAll('.', '.')}{' '}
-            {oneClickForm[platformKey].staff_no}
+            {oneClickForm[platformKey]?.staff_no}
           </p>
         </div>
       </div>
