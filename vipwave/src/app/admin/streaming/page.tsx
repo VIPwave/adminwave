@@ -5,14 +5,16 @@ import SelectBtn from '@/components/Button/SelectBtn';
 import { useSelectedPlatform } from '@/hooks/useSelectedPlatform';
 import { PLATFORM_MAP, PLATFORM_REVERSE_MAP } from '@/lib/musicPlatformData';
 import { DeviceType } from '@/types/oneClick';
-import { useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useOneClickStore } from '@/store/useOneClickStore';
 import submitOneClickLinks from '@/apis/patchOneClick';
 
 const AdminStreamingPage = () => {
   const devices: DeviceType[] = ['ANDROID', 'IPHONE', 'IPAD', 'WINDOWS', 'MAC'];
   const { selectedPlatform, selectPlatform } = useSelectedPlatform();
-  const { initialize, addLink } = useOneClickStore();
+  const { initialize, oneClickForm, addLink } = useOneClickStore();
+  const [password, setPassword] = useState('');
+  const [staff_no, setStaffNo] = useState('총대');
 
   const platformKey =
     PLATFORM_REVERSE_MAP[selectedPlatform] || selectedPlatform;
@@ -34,12 +36,39 @@ const AdminStreamingPage = () => {
     '디자인 스탭3',
   ];
 
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const onChangeStaffNo = (e: ChangeEvent<HTMLSelectElement>) => {
+    setStaffNo(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    console.log('?');
+    const success = await submitOneClickLinks({
+      platformKey,
+      password,
+      staff_no,
+    });
+
+    if (success) window.location.reload();
+  };
+
   useEffect(() => {
     initialize();
   }, [initialize]);
 
   return (
     <div className="flex flex-col gap-4 px-5 py-6">
+      <div>
+        <p>1. 플랫폼 선택</p>
+        <p>2. 추가: 버튼 누르고 링크 입력</p>
+        <p>3. 수정: 수정할 링크 입력 / 수정하지 않는 링크는 비워두기</p>
+        <p>4. 삭제: 우측 X 아이콘 클릭</p>
+        <p>5. 본인 스탭No. 선택 + 패스워드 입력 후 등록</p>
+      </div>
       <div className="flex flex-wrap gap-4">
         {Object.keys(PLATFORM_MAP).map((platform) => (
           <SelectBtn
@@ -56,7 +85,23 @@ const AdminStreamingPage = () => {
           />
         ))}
       </div>
-      <p className="text-white text-lg">{selectedPlatform}</p>
+      <div className="flex justify-between items-baseline">
+        <p className="text-white text-lg">{selectedPlatform}</p>
+        <div>
+          <p className="text-zinc-400 text-xs">
+            최종 수정:{' '}
+            {new Date(oneClickForm[platformKey].update_at)
+              .toLocaleDateString('ko-KR', {
+                year: '2-digit',
+                month: '2-digit',
+                day: '2-digit',
+              })
+              .replaceAll(' ', '')
+              .replaceAll('.', '.')}{' '}
+            {oneClickForm[platformKey].staff_no}
+          </p>
+        </div>
+      </div>
 
       {devices.map((device) => (
         <div key={device} className="flex flex-col gap-4">
@@ -75,7 +120,11 @@ const AdminStreamingPage = () => {
 
       <div className="flex gap-2 justify-end items-center">
         <div className="relative">
-          <select className="w-full p-2 pr-10 bg-chart text-white outline-none appearance-none">
+          <select
+            className="w-full p-2 pr-10 bg-chart text-white outline-none appearance-none"
+            value={staff_no}
+            onChange={onChangeStaffNo}
+          >
             {staffOptions.map((option) => (
               <option key={option} value={option}>
                 {option}
@@ -89,17 +138,14 @@ const AdminStreamingPage = () => {
         <input
           type="password"
           placeholder={'Password'}
+          value={password}
+          onChange={onChangePassword}
           className="px-4 py-2 bg-chart text-white outline-none"
         />
       </div>
 
       <div className="flex justify-end">
-        <button
-          className="bg-chart px-4 py-1"
-          onClick={() => {
-            submitOneClickLinks(platformKey);
-          }}
-        >
+        <button className="bg-chart px-4 py-1" onClick={handleSubmit}>
           등록
         </button>
       </div>

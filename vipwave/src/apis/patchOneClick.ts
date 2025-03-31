@@ -1,8 +1,19 @@
 import apiClient from '@/lib/apiClient';
 import { useOneClickStore } from '@/store/useOneClickStore';
-import { DeviceType } from '@/types/oneClick';
+import { DeviceType, STAFF_CODE_MAP } from '@/types/oneClick';
+import { HTTPError } from 'ky';
 
-const submitOneClickLinks = async (platformKey: string) => {
+interface SubmitOneClickLinkProps {
+  platformKey: string;
+  password: string;
+  staff_no: string;
+}
+
+const submitOneClickLinks = async ({
+  platformKey,
+  password,
+  staff_no,
+}: SubmitOneClickLinkProps) => {
   const { oneClickForm, editedLinks, originalLinks } =
     useOneClickStore.getState();
 
@@ -34,6 +45,10 @@ const submitOneClickLinks = async (platformKey: string) => {
   try {
     const res = await apiClient.patch(`one-click/${platformData.id}`, {
       json: patchBody,
+      headers: {
+        'X-ADMIN-CODE': password,
+        'X-STAFF-NO': STAFF_CODE_MAP[staff_no],
+      },
     });
 
     if (res.ok) {
@@ -41,9 +56,20 @@ const submitOneClickLinks = async (platformKey: string) => {
     } else {
       alert('등록 중 오류가 발생했습니다.');
     }
+
+    return true;
   } catch (err) {
-    console.log(err);
-    alert('등록 실패');
+    if (err instanceof HTTPError) {
+      const status = err.response.status;
+
+      if (status === 403) {
+        alert('비밀번호가 틀렸습니다.');
+      } else {
+        alert('등록 실패');
+      }
+    } else {
+      console.log(err);
+    }
   }
 };
 

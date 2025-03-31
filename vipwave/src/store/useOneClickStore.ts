@@ -21,6 +21,8 @@ export const useOneClickStore = create<OneClickState>((set, get) => ({
   oneClickForm: {},
   editedLinks: {},
   originalLinks: {},
+  staff_no: '',
+  update_at: '',
   initialize: async () => {
     const data = await fetchOneClickLinks();
     const entries = (data?.data || []).reduce<Record<string, PlatformData>>(
