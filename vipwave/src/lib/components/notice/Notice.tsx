@@ -18,7 +18,7 @@ export default function NoticeList(props: { title: string }) {
 
   return (
     <>
-      <div className="flex py-2 border-b border-gray-800 mt-10 px-2">
+      <div className="flex py-2 border-b border-primary mt-5 mb-2">
         <span className="font-bold grow">{props.title}</span>
         <span className="text-gray-500 text-xs flex items-center">{today}</span>
       </div>
@@ -75,7 +75,7 @@ function Notice(props: { title: string; url: string; isExtra?: boolean }) {
   return (
     <Button
       variant="ghost"
-      className="w-full flex justify-between items-center"
+      className="w-full flex justify-between items-center p-0"
       onClick={handleClick}
     >
       <span className="overflow-hidden text-ellipsis whitespace-nowrap max-w-[calc(100%-24px)]">

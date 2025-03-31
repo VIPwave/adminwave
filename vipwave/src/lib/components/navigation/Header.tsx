@@ -10,7 +10,7 @@ export default function Header() {
   const isAdminPage = path.startsWith('/admin');
 
   return (
-    <header className="flex items-center justify-between px-5 py-4 border-b border-gray-800 text-sm">
+    <header className="flex items-center justify-between px-5 py-2 border-b border-secondary text-sm">
       <Link className="font-bold" href="/">
         VIPWAVE
       </Link>

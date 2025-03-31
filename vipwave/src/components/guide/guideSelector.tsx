@@ -1,5 +1,4 @@
 import { Guide, TAB, FILTERS } from '@/lib/guideData';
-import SelectBtn from '../Button/SelectBtn';
 
 interface GuideSelectorProps {
   selectedTab: TAB;
@@ -13,7 +12,7 @@ export default function GuideSelector({
   changeGuide,
 }: GuideSelectorProps) {
   return (
-    <div className="flex flex-wrap gap-2 mb-4">
+    <div className="flex flex-wrap gap-2 mb-5">
       {FILTERS[selectedTab].length > 1 &&
         FILTERS[selectedTab].map((guide, index) => (
           <SelectBtn

@@ -1,6 +1,5 @@
 'use client';
 
-import BlockBtn from '@/components/Button/BlockBtn';
 import Modal from '@/lib/components/modal/modal';
 import { getDeviceType } from '@/lib/detectDevice';
 import { globalStreamingLinks, streamingLinks } from '@/lib/streamingLinks';
@@ -81,8 +80,8 @@ export default function StreamingPage() {
 
   return (
     <div className="px-5">
-      <p className="font-bold mt-6 mb-2 text-sm">원클릭 링크</p>
-      <p className="my-4 text-sm break-keep">
+      <p className="font-bold mt-5 text-sm">원클릭 링크</p>
+      <p className="my-2 text-sm break-keep">
         원클릭 링크를 실행하기 전, 아래 네 가지 항목을 모두 체크 후에
         담아주세요.
       </p>
@@ -102,7 +101,7 @@ export default function StreamingPage() {
       </div>
 
       <p className="font-bold text-sm mb-4 mt-8">해외 차트 스트리밍</p>
-      <div className="grid grid-cols-2 gap-5 w-full mb-8">
+      <div className="grid grid-cols-2 gap-5 w-full mb-5">
         {globalStreamingLinks.map((site) => (
           <BlockBtn
             key={site.name}
@@ -112,9 +111,9 @@ export default function StreamingPage() {
           />
         ))}
       </div>
-      <hr className="my-8" />
+      <hr className="my-5" />
       <p className="font-bold text-sm">스트리밍 리스트</p>
-      <p className="my-4 text-sm break-keep">
+      <p className="my-2 text-sm break-keep">
         원클릭 링크가 정상 작동 되지 않는 분들은 총공팀에 문의 후 아래 가이드에
         맞게 설정 후 재생목록을 생성해주세요.
       </p>
