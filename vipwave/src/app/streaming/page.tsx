@@ -1,5 +1,6 @@
 'use client';
 
+import BlockBtn from '@/components/Button/BlockBtn';
 import Modal from '@/lib/components/modal/modal';
 import { getDeviceType } from '@/lib/detectDevice';
 import { globalStreamingLinks, streamingLinks } from '@/lib/streamingLinks';

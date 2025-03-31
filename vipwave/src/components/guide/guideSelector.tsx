@@ -1,4 +1,5 @@
 import { Guide, TAB, FILTERS } from '@/lib/guideData';
+import SelectBtn from '../Button/SelectBtn';
 
 interface GuideSelectorProps {
   selectedTab: TAB;
