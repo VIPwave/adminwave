@@ -1,193 +1,156 @@
 'use client';
 
-import BlockBtn from '@/components/Button/BlockBtn';
-import Modal from '@/lib/components/modal/modal';
-import { getDeviceType } from '@/lib/detectDevice';
-import { globalStreamingLinks, streamingLinks } from '@/lib/streamingLinks';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { RenderLinksByDevice } from '@/components/admin/DeviceLInks';
+import SelectBtn from '@/components/Button/SelectBtn';
+import { useSelectedPlatform } from '@/hooks/useSelectedPlatform';
+import { PLATFORM_MAP, PLATFORM_REVERSE_MAP } from '@/lib/musicPlatformData';
+import { DeviceType } from '@/types/oneClick';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useOneClickStore } from '@/store/useOneClickStore';
+import submitOneClickLinks from '@/apis/patchOneClick';
 
-interface streamingLink {
-  name: string;
-  logo: string;
-  androidLinks?: string[];
-  iphoneLinks?: string[];
-  ipadLinks?: string[];
-  windowLinks?: string[];
-  macLinks?: string[];
-  links?: string[];
-}
+const AdminStreamingPage = () => {
+  const devices: DeviceType[] = ['ANDROID', 'IPHONE', 'IPAD', 'WINDOWS', 'MAC'];
+  const { selectedPlatform, selectPlatform } = useSelectedPlatform();
+  const { initialize, oneClickForm, addLink } = useOneClickStore();
+  const [password, setPassword] = useState('');
+  const [staff_no, setStaffNo] = useState('총대');
 
-export default function StreamingPage() {
-  const [selectedSite, setSelectedSite] = useState<{
-    name: string;
-    logo: string;
-    links: string[];
-    showDeviceType: boolean;
-  } | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deviceType, setDeviceType] = useState<string>('');
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const platformKey =
+    PLATFORM_REVERSE_MAP[selectedPlatform] || selectedPlatform;
 
-  useEffect(() => {
-    setDeviceType(getDeviceType());
-  }, []);
+  const staffOptions = [
+    '총대',
+    '스탭1',
+    '스탭2',
+    '스탭3',
+    '스탭4',
+    '스탭5',
+    '스탭6',
+    '스탭7',
+    '스탭8',
+    '스탭9',
+    '스탭10',
+    '디자인 스탭1',
+    '디자인 스탭2',
+    '디자인 스탭3',
+  ];
 
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
 
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isModalOpen]);
+  const onChangeStaffNo = (e: ChangeEvent<HTMLSelectElement>) => {
+    setStaffNo(e.target.value);
+    console.log(e.target.value);
+  };
 
-  const openModal = (site: streamingLink, showDeviceType: boolean) => {
-    let links: string[] = [];
-
-    if (showDeviceType) {
-      if (deviceType === 'Android') {
-        links = site.androidLinks || [];
-      } else if (deviceType === 'iOS') {
-        links = site.iphoneLinks || [];
-      } else if (deviceType === 'iPad') {
-        links = site.ipadLinks || [];
-      } else if (deviceType === 'Windows') {
-        links = site.windowLinks || [];
-      } else if (deviceType === 'Mac') {
-        links = site.macLinks || [];
-      }
-    } else {
-      links = site.links || [];
-      console.log(site.links);
-    }
-
-    setSelectedSite({
-      name: site.name,
-      logo: site.logo,
-      links,
-      showDeviceType,
+  const handleSubmit = async () => {
+    console.log('?');
+    const success = await submitOneClickLinks({
+      platformKey,
+      password,
+      staff_no,
     });
-    console.log(selectedSite);
-    setIsModalOpen(true);
+
+    if (success) window.location.reload();
   };
 
-  const handleButtonClick = (link: string) => {
-    window.open(link, '_blank');
-  };
+  useEffect(() => {
+    initialize();
+  }, [initialize]);
 
   return (
-    <div className="px-5">
-      <p className="font-bold mt-5 text-sm">원클릭 링크</p>
-      <p className="my-2 text-sm break-keep">
-        원클릭 링크를 실행하기 전, 아래 네 가지 항목을 모두 체크 후에
-        담아주세요.
-      </p>
-      <p className="text-sm break-keep">☑️ 재생목록 비우기</p>
-      <p className="text-sm break-keep">☑️ 중복곡 허용</p>
-      <p className="text-sm break-keep">{`☑️ 설정 > "재생목록 맨끝에 추가" 변경`}</p>
-      <p className="mb-4 text-sm break-keep">☑️ 음원 다운로드 파일 삭제</p>
-      <div className="grid grid-cols-2 gap-5 w-full mb-8">
-        {streamingLinks.map((site) => (
-          <BlockBtn
-            key={site.name}
-            text={site.name}
-            iconSrc={site.logo}
-            onClick={() => openModal(site, true)}
-          />
-        ))}
+    <div className="flex flex-col gap-4 px-5 py-6">
+      <div>
+        <p>1. 플랫폼 선택</p>
+        <p>2. 추가: 버튼 누르고 링크 입력</p>
+        <p>3. 수정: 수정할 링크 입력 / 수정하지 않는 링크는 비워두기</p>
+        <p>4. 삭제: 우측 X 아이콘 클릭</p>
+        <p>5. 본인 스탭No. 선택 + 패스워드 입력 후 등록</p>
       </div>
-
-      <p className="font-bold text-sm mb-4 mt-8">해외 차트 스트리밍</p>
-      <div className="grid grid-cols-2 gap-5 w-full mb-5">
-        {globalStreamingLinks.map((site) => (
-          <BlockBtn
-            key={site.name}
-            text={site.name}
-            iconSrc={site.logo}
-            onClick={() => openModal(site, false)}
-          />
-        ))}
-      </div>
-      <hr className="my-5" />
-      <p className="font-bold text-sm">스트리밍 리스트</p>
-      <p className="my-2 text-sm break-keep">
-        원클릭 링크가 정상 작동 되지 않는 분들은 총공팀에 문의 후 아래 가이드에
-        맞게 설정 후 재생목록을 생성해주세요.
-      </p>
-      <div className="flex flex-col justify-center items-center">
-        <div className="relative w-[550px] max-w-full">
-          {!imageLoaded && (
-            <div className="absolute top-0 left-0 w-full h-full bg-gray-300 animate-pulse" />
-          )}
-          <Image
-            src={'/gdragon_playlist_ver3.jpeg'}
-            alt="streamingList"
-            width={550}
-            height={500}
-            priority
-            className={`transition-opacity duration-500 object-cover ${
-              imageLoaded ? 'opacity-100' : 'opacity-0'
+      <div className="flex flex-wrap gap-4">
+        {Object.keys(PLATFORM_MAP).map((platform) => (
+          <SelectBtn
+            key={platform}
+            text={
+              PLATFORM_MAP[platform as keyof typeof PLATFORM_MAP] || platform
+            }
+            onClick={() => selectPlatform(platform)}
+            className={`${
+              selectedPlatform === platform
+                ? 'bg-white text-black'
+                : 'bg-chart text-white'
             }`}
-            onLoad={() => setImageLoaded(true)}
           />
+        ))}
+      </div>
+      <div className="flex justify-between items-baseline">
+        <p className="text-white text-lg">{selectedPlatform}</p>
+        <div>
+          <p className="text-zinc-400 text-xs">
+            최종 수정:{' '}
+            {new Date(oneClickForm[platformKey]?.update_at)
+              .toLocaleDateString('ko-KR', {
+                year: '2-digit',
+                month: '2-digit',
+                day: '2-digit',
+              })
+              .replaceAll(' ', '')
+              .replaceAll('.', '.')}{' '}
+            {oneClickForm[platformKey]?.staff_no}
+          </p>
         </div>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        {selectedSite && (
-          <div className="flex flex-col gap-[20px]">
-            <div className="flex items-center gap-4 text-[16px]">
-              <Image
-                className="rounded-lg"
-                src={selectedSite.logo}
-                alt={`${selectedSite.name} logo`}
-                width={30}
-                height={30}
-                priority
-                unoptimized
-              />
-              {selectedSite.name} 원클릭{' '}
-              {selectedSite.showDeviceType && `(${deviceType})`}
-            </div>
-
-            {selectedSite.links.length > 1 && (
-              <div className="text-sm text-center">
-                {selectedSite.links.length}개의 링크를 순서대로 모두
-                클릭해주세요
-              </div>
-            )}
-
-            {selectedSite.links.length > 0 ? (
-              <>
-                <div className="grid grid-cols-2 gap-2">
-                  {selectedSite.links.map((link, index) => (
-                    <div
-                      key={index}
-                      onClick={() => handleButtonClick(link)}
-                      className=" text-center border-solid border-[1.5px] border-white p-3 cursor-pointer"
-                    >
-                      {selectedSite.name} {index + 1}
-                    </div>
-                  ))}
-                </div>
-                {selectedSite.showDeviceType && (
-                  <p className="text-zinc-400 text-xs text-center">
-                    전체반복 ON / 랜덤재생 OFF / 중복곡 허용 / 캐싱적용 OFF
-                  </p>
-                )}
-              </>
-            ) : (
-              <div className="text-center text-xs">
-                현재 기기에서 사용할 수 있는 링크가 없습니다
-              </div>
-            )}
+      {devices.map((device) => (
+        <div key={device} className="flex flex-col gap-4">
+          <p>{device}</p>
+          <RenderLinksByDevice deviceType={device} platformKey={platformKey} />
+          <div className="flex justify-end">
+            <button
+              className="bg-chart px-4 py-1"
+              onClick={() => addLink(platformKey, device)}
+            >
+              추가
+            </button>
           </div>
-        )}
-      </Modal>
+        </div>
+      ))}
+
+      <div className="flex gap-2 justify-end items-center">
+        <div className="relative">
+          <select
+            className="w-full p-2 pr-10 bg-chart text-white outline-none appearance-none"
+            value={staff_no}
+            onChange={onChangeStaffNo}
+          >
+            {staffOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white text-xs">
+            ▼
+          </div>
+        </div>
+        <input
+          type="password"
+          placeholder={'Password'}
+          value={password}
+          onChange={onChangePassword}
+          className="px-4 py-2 bg-chart text-white outline-none"
+        />
+      </div>
+
+      <div className="flex justify-end">
+        <button className="bg-chart px-4 py-1" onClick={handleSubmit}>
+          등록
+        </button>
+      </div>
     </div>
   );
-}
+};
+
+export default AdminStreamingPage;
