@@ -1,4 +1,4 @@
-name: Auto Sync to Fork (narinn-star/adminwave)
+name: Auto Sync to Fork
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
       - name: Sync with fork
         uses: wei/git-sync@v3
         with:
-          source_repo: ${{ secrets.SOURCE_GITHUB_URL }}
+          source_repo: https://github.com/VIPwave/adminwave.git
           source_branch: main
           destination_repo: ${{ secrets.DESTINATION_GITHUB_URL }}
           destination_branch: main
