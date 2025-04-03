@@ -7,7 +7,7 @@ import { Metadata } from 'next';
 
 // metadata
 export const metadata: Metadata = {
-  title: 'VIPWAVE',
+  title: 'ADMINWAVE',
   description: '빅뱅 음원총공팀',
   icons: { icon: '/icon.ico' },
 };
