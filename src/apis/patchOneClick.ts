@@ -1,18 +1,18 @@
 import apiClient from '@/lib/apiClient';
 import { useOneClickStore } from '@/store/useOneClickStore';
-import { DeviceType, STAFF_CODE_MAP } from '@/types/oneClick';
+import { DeviceType } from '@/types/oneClick';
 import { HTTPError } from 'ky';
 
 interface SubmitOneClickLinkProps {
   platformKey: string;
   password: string;
-  staff_no: string;
+  staffNo: string;
 }
 
 const submitOneClickLinks = async ({
   platformKey,
   password,
-  staff_no,
+  staffNo,
 }: SubmitOneClickLinkProps) => {
   const { oneClickForm, editedLinks, originalLinks } =
     useOneClickStore.getState();
@@ -36,7 +36,7 @@ const submitOneClickLinks = async ({
       if (finalLinks.length === 0) return null;
 
       return {
-        device_type: device,
+        deviceType: device,
         links: finalLinks,
       };
     })
@@ -44,10 +44,15 @@ const submitOneClickLinks = async ({
 
   try {
     const res = await apiClient.patch(`one-click/${platformData.id}`, {
-      json: patchBody,
+      json: {
+        staffNo,
+        updatedList: patchBody.map((item) => ({
+          deviceType: item!.deviceType,
+          links: item!.links,
+        })),
+      },
       headers: {
         'X-ADMIN-CODE': password,
-        'X-STAFF-NO': STAFF_CODE_MAP[staff_no],
       },
     });
 
@@ -59,6 +64,7 @@ const submitOneClickLinks = async ({
 
     return true;
   } catch (err) {
+    console.log(err);
     if (err instanceof HTTPError) {
       const status = err.response.status;
 

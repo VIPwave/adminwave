@@ -12,12 +12,13 @@ import submitOneClickLinks from '@/apis/patchOneClick';
 const AdminStreamingPage = () => {
   const devices: DeviceType[] = ['ANDROID', 'IPHONE', 'IPAD', 'WINDOWS', 'MAC'];
   const { selectedPlatform, selectPlatform } = useSelectedPlatform();
-  const { initialize, oneClickForm, addLink } = useOneClickStore();
+  const { initialize, oneClickForm, addLink, editedLinks } = useOneClickStore();
   const [password, setPassword] = useState('');
-  const [staff_no, setStaffNo] = useState('총대');
+  const [staffNo, setStaffNo] = useState('총대');
 
-  const platformKey =
-    PLATFORM_REVERSE_MAP[selectedPlatform] || selectedPlatform;
+  const platformKey = (
+    PLATFORM_REVERSE_MAP[selectedPlatform] || selectedPlatform
+  ).toLowerCase();
 
   const staffOptions = [
     '총대',
@@ -50,7 +51,7 @@ const AdminStreamingPage = () => {
     const success = await submitOneClickLinks({
       platformKey,
       password,
-      staff_no,
+      staffNo,
     });
 
     if (success) window.location.reload();
@@ -90,15 +91,18 @@ const AdminStreamingPage = () => {
         <div>
           <p className="text-zinc-400 text-xs">
             최종 수정:{' '}
-            {new Date(oneClickForm[platformKey]?.update_at)
-              .toLocaleDateString('ko-KR', {
+            {
+              new Date(
+                oneClickForm[platformKey]?.updatedAt.replace(' ', 'T')
+              ).toLocaleDateString('ko-KR', {
                 year: '2-digit',
                 month: '2-digit',
                 day: '2-digit',
               })
-              .replaceAll(' ', '')
-              .replaceAll('.', '.')}{' '}
-            {oneClickForm[platformKey]?.staff_no}
+              // .replaceAll(' ', '')
+              // .replaceAll('.', '.')
+            }
+            {oneClickForm[platformKey]?.staffNo}
           </p>
         </div>
       </div>
@@ -122,7 +126,7 @@ const AdminStreamingPage = () => {
         <div className="relative">
           <select
             className="w-full p-2 pr-10 bg-chart text-white outline-none appearance-none"
-            value={staff_no}
+            value={staffNo}
             onChange={onChangeStaffNo}
           >
             {staffOptions.map((option) => (
@@ -145,7 +149,12 @@ const AdminStreamingPage = () => {
       </div>
 
       <div className="flex justify-end">
-        <button className="bg-chart px-4 py-1" onClick={handleSubmit}>
+        <button
+          className="bg-chart px-4 py-1"
+          //onClick={handleSubmit}
+          //onClick={() => console.log(oneClickForm[platformKey])}
+          onClick={() => console.log(oneClickForm, editedLinks)}
+        >
           등록
         </button>
       </div>
