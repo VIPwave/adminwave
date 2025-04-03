@@ -25,7 +25,6 @@ export const useOneClickStore = create<OneClickState>((set, get) => ({
   updatedAt: '',
   initialize: async () => {
     const data = await fetchOneClickLinks();
-    console.log(data);
     const entries = (data?.data || []).reduce<Record<string, PlatformData>>(
       (acc, item) => {
         acc[item.platform.toLowerCase()] = item;

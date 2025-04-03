@@ -12,7 +12,7 @@ import submitOneClickLinks from '@/apis/patchOneClick';
 const AdminStreamingPage = () => {
   const devices: DeviceType[] = ['ANDROID', 'IPHONE', 'IPAD', 'WINDOWS', 'MAC'];
   const { selectedPlatform, selectPlatform } = useSelectedPlatform();
-  const { initialize, oneClickForm, addLink, editedLinks } = useOneClickStore();
+  const { initialize, oneClickForm, addLink } = useOneClickStore();
   const [password, setPassword] = useState('');
   const [staffNo, setStaffNo] = useState('총대');
 
@@ -43,11 +43,9 @@ const AdminStreamingPage = () => {
 
   const onChangeStaffNo = (e: ChangeEvent<HTMLSelectElement>) => {
     setStaffNo(e.target.value);
-    console.log(e.target.value);
   };
 
   const handleSubmit = async () => {
-    console.log('?');
     const success = await submitOneClickLinks({
       platformKey,
       password,
@@ -91,17 +89,13 @@ const AdminStreamingPage = () => {
         <div>
           <p className="text-zinc-400 text-xs">
             최종 수정:{' '}
-            {
-              new Date(
-                oneClickForm[platformKey]?.updatedAt.replace(' ', 'T')
-              ).toLocaleDateString('ko-KR', {
-                year: '2-digit',
-                month: '2-digit',
-                day: '2-digit',
-              })
-              // .replaceAll(' ', '')
-              // .replaceAll('.', '.')
-            }
+            {new Date(
+              oneClickForm[platformKey]?.updatedAt.replace(' ', 'T')
+            ).toLocaleDateString('ko-KR', {
+              year: '2-digit',
+              month: '2-digit',
+              day: '2-digit',
+            })}{' '}
             {oneClickForm[platformKey]?.staffNo}
           </p>
         </div>
@@ -149,12 +143,7 @@ const AdminStreamingPage = () => {
       </div>
 
       <div className="flex justify-end">
-        <button
-          className="bg-chart px-4 py-1"
-          //onClick={handleSubmit}
-          //onClick={() => console.log(oneClickForm[platformKey])}
-          onClick={() => console.log(oneClickForm, editedLinks)}
-        >
+        <button className="bg-chart px-4 py-1" onClick={handleSubmit}>
           등록
         </button>
       </div>
