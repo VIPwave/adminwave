@@ -1,6 +1,6 @@
 import apiClient from '@/lib/apiClient';
 import { useOneClickStore } from '@/store/useOneClickStore';
-import { DeviceType } from '@/types/oneClick';
+import { DeviceType, STAFF_CODE_MAP } from '@/types/oneClick';
 import { HTTPError } from 'ky';
 
 interface SubmitOneClickLinkProps {
@@ -45,7 +45,7 @@ const submitOneClickLinks = async ({
   try {
     const res = await apiClient.patch(`one-click/${platformData.id}`, {
       json: {
-        staffNo,
+        staffNo: STAFF_CODE_MAP[staffNo]?.toLowerCase(),
         updatedList: patchBody.map((item) => ({
           deviceType: item!.deviceType,
           links: item!.links,

@@ -1,6 +1,6 @@
 'use client';
 
-import { RenderLinksByDevice } from '@/components/admin/DeviceLInks';
+import { RenderLinksByDevice } from '@/components/streaming/DeviceLInks';
 import SelectBtn from '@/components/Button/SelectBtn';
 import { useSelectedPlatform } from '@/hooks/useSelectedPlatform';
 import { PLATFORM_MAP, PLATFORM_REVERSE_MAP } from '@/lib/musicPlatformData';
@@ -15,6 +15,7 @@ const AdminStreamingPage = () => {
   const { initialize, oneClickForm, addLink } = useOneClickStore();
   const [password, setPassword] = useState('');
   const [staffNo, setStaffNo] = useState('총대');
+  const [isOpen, setIsOpen] = useState(false);
 
   const platformKey = (
     PLATFORM_REVERSE_MAP[selectedPlatform] || selectedPlatform
@@ -59,6 +60,18 @@ const AdminStreamingPage = () => {
     initialize();
   }, [initialize]);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   return (
     <div className="flex flex-col gap-4 px-5 py-6">
       <div>
@@ -66,7 +79,7 @@ const AdminStreamingPage = () => {
         <p>2. 추가: 버튼 누르고 링크 입력</p>
         <p>3. 수정: 수정할 링크 입력 / 수정하지 않는 링크는 비워두기</p>
         <p>4. 삭제: 우측 X 아이콘 클릭</p>
-        <p>5. 본인 스탭No. 선택 + 패스워드 입력 후 등록</p>
+        <p>5. 저장: 본인 스탭No. 선택 + 패스워드 입력 후 등록</p>
       </div>
       <div className="flex flex-wrap gap-4">
         {Object.keys(PLATFORM_MAP).map((platform) => (
@@ -102,10 +115,9 @@ const AdminStreamingPage = () => {
       </div>
 
       {devices.map((device) => (
-        <div key={device} className="flex flex-col gap-4">
-          <p>{device}</p>
-          <RenderLinksByDevice deviceType={device} platformKey={platformKey} />
-          <div className="flex justify-end">
+        <div key={device} className="flex flex-col gap-4 mt-8">
+          <div className="flex justify-between">
+            <p>{device}</p>
             <button
               className="bg-chart px-4 py-1"
               onClick={() => addLink(platformKey, device)}
@@ -113,40 +125,69 @@ const AdminStreamingPage = () => {
               추가
             </button>
           </div>
+          <RenderLinksByDevice deviceType={device} platformKey={platformKey} />
         </div>
       ))}
 
-      <div className="flex gap-2 justify-end items-center">
-        <div className="relative">
-          <select
-            className="w-full p-2 pr-10 bg-chart text-white outline-none appearance-none"
-            value={staffNo}
-            onChange={onChangeStaffNo}
-          >
-            {staffOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white text-xs">
-            ▼
-          </div>
-        </div>
-        <input
-          type="password"
-          placeholder={'Password'}
-          value={password}
-          onChange={onChangePassword}
-          className="px-4 py-2 bg-chart text-white outline-none"
-        />
-      </div>
-
-      <div className="flex justify-end">
-        <button className="bg-chart px-4 py-1" onClick={handleSubmit}>
-          등록
+      <div className="flex mt-8 justify-end">
+        <button
+          className="bg-chart w-full py-3"
+          onClick={() => setIsOpen(true)}
+        >
+          저장
         </button>
       </div>
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={() => setIsOpen(false)}
+        >
+          <div
+            className="flex flex-col gap-5 bg-chart rounded-lg p-6 shadow-lg w-full max-w-sm"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2>비밀번호 확인</h2>
+            <div className="flex gap-2 justify-center items-center">
+              <div className="relative">
+                <select
+                  className="w-full p-2 pr-10 bg-chart border text-white outline-none appearance-none"
+                  value={staffNo}
+                  onChange={onChangeStaffNo}
+                >
+                  {staffOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white text-xs">
+                  ▼
+                </div>
+              </div>
+              <input
+                type="password"
+                placeholder={'Password'}
+                value={password}
+                onChange={onChangePassword}
+                className="px-4 py-2 bg-chart border text-white outline-none"
+              />
+            </div>
+            <div className="flex gap-3 justify-end">
+              <button
+                className="border px-4 py-2"
+                onClick={() => {
+                  setIsOpen(false);
+                }}
+              >
+                취소
+              </button>
+              <button className="border px-4 py-2" onClick={handleSubmit}>
+                등록
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
