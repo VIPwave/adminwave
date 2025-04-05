@@ -169,7 +169,7 @@ const AdminStreamingPage = () => {
                 placeholder={'Password'}
                 value={password}
                 onChange={onChangePassword}
-                className="px-4 py-2 bg-chart border text-white outline-none"
+                className="px-4 py-2 bg-chart border text-white outline-none rounded-none"
               />
             </div>
             <div className="flex gap-3 justify-end">

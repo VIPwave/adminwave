@@ -27,7 +27,7 @@ export const RenderLinksByDevice = ({ deviceType, platformKey }: Props) => {
           type="text"
           value={originalLink}
           placeholder={originalLink ? '' : '새 링크 입력해주세요'}
-          className="px-4 py-2 w-full bg-chart text-white"
+          className="px-4 py-2 w-full bg-chart text-white rounded-none outline-none"
           disabled
         />
         <div className="text-center text-white">→</div>
@@ -38,7 +38,7 @@ export const RenderLinksByDevice = ({ deviceType, platformKey }: Props) => {
           onChange={(e) =>
             updateLink(platformKey, deviceType, index, e.target.value)
           }
-          className="px-4 py-2 w-full bg-chart text-white outline-none"
+          className="px-4 py-2 w-full bg-chart text-white outline-none rounded-none"
         />
         <button
           className="text-center text-white"
