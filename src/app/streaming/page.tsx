@@ -8,9 +8,17 @@ import { DeviceType } from '@/types/oneClick';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useOneClickStore } from '@/store/useOneClickStore';
 import submitOneClickLinks from '@/apis/patchOneClick';
+import ConfirmLinksModal from '@/components/streaming/ConfirmModal';
+
+export const devices: DeviceType[] = [
+  'ANDROID',
+  'IPHONE',
+  'IPAD',
+  'WINDOWS',
+  'MAC',
+];
 
 const AdminStreamingPage = () => {
-  const devices: DeviceType[] = ['ANDROID', 'IPHONE', 'IPAD', 'WINDOWS', 'MAC'];
   const { selectedPlatform, selectPlatform } = useSelectedPlatform();
   const { initialize, oneClickForm, addLink } = useOneClickStore();
   const [password, setPassword] = useState('');
@@ -138,55 +146,17 @@ const AdminStreamingPage = () => {
         </button>
       </div>
       {isOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-          onClick={() => setIsOpen(false)}
-        >
-          <div
-            className="flex flex-col gap-5 bg-chart rounded-lg p-6 shadow-lg w-full max-w-sm"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2>비밀번호 확인</h2>
-            <div className="flex gap-2 justify-center items-center">
-              <div className="relative">
-                <select
-                  className="w-full p-2 pr-10 bg-chart border text-white outline-none appearance-none"
-                  value={staffNo}
-                  onChange={onChangeStaffNo}
-                >
-                  {staffOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white text-xs">
-                  ▼
-                </div>
-              </div>
-              <input
-                type="password"
-                placeholder={'Password'}
-                value={password}
-                onChange={onChangePassword}
-                className="px-4 py-2 bg-chart border text-white outline-none rounded-none"
-              />
-            </div>
-            <div className="flex gap-3 justify-end">
-              <button
-                className="border px-4 py-2"
-                onClick={() => {
-                  setIsOpen(false);
-                }}
-              >
-                취소
-              </button>
-              <button className="border px-4 py-2" onClick={handleSubmit}>
-                등록
-              </button>
-            </div>
-          </div>
-        </div>
+        <ConfirmLinksModal
+          platformKey={platformKey}
+          selectedPlatform={selectedPlatform}
+          password={password}
+          staffNo={staffNo}
+          staffOptions={staffOptions}
+          onChangePassword={onChangePassword}
+          onChangeStaffNo={onChangeStaffNo}
+          onConfirm={handleSubmit}
+          onCancel={() => setIsOpen(false)}
+        />
       )}
     </div>
   );
