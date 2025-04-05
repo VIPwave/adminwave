@@ -1,6 +1,6 @@
 'use client';
 
-import { devices } from '@/app/streaming/page';
+import { devices } from '@/lib/constants/devices';
 import { useOneClickStore } from '@/store/useOneClickStore';
 import { DeviceType } from '@/types/oneClick';
 import { ChangeEvent } from 'react';

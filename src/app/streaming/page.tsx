@@ -4,19 +4,11 @@ import { RenderLinksByDevice } from '@/components/streaming/DeviceLInks';
 import SelectBtn from '@/components/Button/SelectBtn';
 import { useSelectedPlatform } from '@/hooks/useSelectedPlatform';
 import { PLATFORM_MAP, PLATFORM_REVERSE_MAP } from '@/lib/musicPlatformData';
-import { DeviceType } from '@/types/oneClick';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useOneClickStore } from '@/store/useOneClickStore';
 import submitOneClickLinks from '@/apis/patchOneClick';
-import ConfirmLinksModal from '@/components/streaming/ConfirmModal';
-
-export const devices: DeviceType[] = [
-  'ANDROID',
-  'IPHONE',
-  'IPAD',
-  'WINDOWS',
-  'MAC',
-];
+import ConfirmLinksModal from '@/components/streaming/ConfirmLinksModal';
+import { devices } from '@/lib/constants/devices';
 
 const AdminStreamingPage = () => {
   const { selectedPlatform, selectPlatform } = useSelectedPlatform();
