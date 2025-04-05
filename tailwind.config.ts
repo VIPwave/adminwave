@@ -1,37 +1,39 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 export default {
-  darkMode: ["class"],
+  darkMode: ['class'],
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
-    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/lib/**/*.{js,ts,jsx,tsx,mdx}',
+    './lib/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        primary: "#fff000",
-        chart: "#252525",
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        primary: '#fff000',
+        chart: '#252525',
       },
       borderColor: {
-        primary: "#6b7280",
-        secondary: "#374151",
+        primary: '#6b7280',
+        secondary: '#374151',
       },
       textColor: {
-        primary: "#fff000",
-        white: "#fff",
-        secondary: "#a1a1aa",
+        primary: '#fff000',
+        white: '#fff',
+        secondary: '#a1a1aa',
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
     },
   },
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  plugins: [require('tailwind-scrollbar-hide')],
   // plugins: [require("tailwindcss-animate")],
 } satisfies Config;

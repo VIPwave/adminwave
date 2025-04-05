@@ -47,7 +47,7 @@ const ConfirmLinksModal = ({
       onClick={onCancel}
     >
       <div
-        className="flex flex-col gap-5 bg-chart rounded-lg p-6 shadow-lg w-full max-w-sm"
+        className="flex flex-col gap-5 bg-chart rounded-lg p-6 shadow-lg w-full max-h-[500px] max-w-sm scrollbar-hide overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <h2>아래 {selectedPlatform} 링크가 vipwave에 반영됩니다</h2>
@@ -61,14 +61,14 @@ const ConfirmLinksModal = ({
 
             return (
               <div key={device}>
-                <p className="text-white font-semibold mb-1">{device}</p>
+                <p className="text-white mb-1">{device}</p>
                 {edited.map((editedLink, idx) => {
                   const fallback = original[idx] || '';
                   const final = editedLink.trim() || fallback;
                   return (
                     <div
                       key={idx}
-                      className="bg-chart text-white px-3 py-1 mb-1 break-all"
+                      className="bg-chart text-white text-[14px] px-3 py-[6px] mb-1 break-all"
                     >
                       {final}
                     </div>
